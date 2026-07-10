@@ -1088,24 +1088,139 @@ export default function App() {
           ) : null}
 
           {activeFooterTab === "contact" ? (
-            <>
-              <span className="section-label">Contact Us</span>
-              <h3>Talk to EasyMart support anytime you need help.</h3>
-              <div className="footer-detail-points">
-                <div>
-                  <strong>Email</strong>
-                  <span>support@easymart.in</span>
+            <div className="contact-experience">
+              <div className="contact-hero">
+                <div className="contact-copy">
+                  <span className="contact-pill">Contact EasyMart</span>
+                  <h3>Contact Us</h3>
+                  <p>
+                    We'd love to hear from you. Have a question, suggestion, or
+                    need help? Get in touch with us.
+                  </p>
+                  <div className="contact-benefits">
+                    <span>Fast Reply</span>
+                    <span>24h Support</span>
+                    <span>Customer Friendly</span>
+                  </div>
                 </div>
-                <div>
-                  <strong>Phone</strong>
-                  <span>+91 98765 43210</span>
-                </div>
-                <div>
-                  <strong>Address</strong>
-                  <span>EasyMart Service Hub, Noida, Uttar Pradesh, India</span>
+
+                <div className="support-video-card" aria-label="Live contact desk preview">
+                  <div className="support-video-top">
+                    <span>LIVE CONTACT DESK</span>
+                    <strong>Need Help?</strong>
+                    <em>ONLINE</em>
+                  </div>
+                  <div className="support-chat-bubble">
+                    Hi! Main EasyMart AI support hu. Order, exchange, delivery,
+                    return ya payment ke baare me pooch sakte ho.
+                  </div>
+                  <div className="support-chip-row">
+                    <span>Exchange kaise kare?</span>
+                    <span>Order track kaise hoga?</span>
+                    <span>Delivery kitne din me?</span>
+                  </div>
+                  <div className="support-input-demo">
+                    <span>Type your question...</span>
+                    <button type="button">Send</button>
+                  </div>
                 </div>
               </div>
-            </>
+
+              <div className="contact-main-grid">
+                <form
+                  className="contact-form-panel"
+                  onSubmit={(event) => {
+                    event.preventDefault();
+                    setToast("Message received. EasyMart support jaldi contact karega.");
+                  }}
+                >
+                  <span className="section-label">Contact Form</span>
+                  <h3>Send Message</h3>
+                  <div className="contact-form-grid">
+                    <input type="text" placeholder="Full Name" required />
+                    <input type="email" placeholder="Email Address" required />
+                    <input type="tel" placeholder="Mobile Number" required />
+                    <input type="text" placeholder="Subject" required />
+                    <textarea placeholder="Message" required />
+                  </div>
+                  <button className="primary-btn full-width" type="submit">
+                    Send Message
+                  </button>
+                </form>
+
+                <div className="contact-info-stack">
+                  <div>
+                    <span className="contact-icon">A</span>
+                    <strong>Address</strong>
+                    <p>Bhopal, Madhya Pradesh, India</p>
+                  </div>
+                  <div>
+                    <span className="contact-icon">@</span>
+                    <strong>Email</strong>
+                    <p>support@easymart.in</p>
+                  </div>
+                  <div>
+                    <span className="contact-icon">P</span>
+                    <strong>Phone</strong>
+                    <p>+91 9304154904</p>
+                  </div>
+                  <div>
+                    <span className="contact-icon">H</span>
+                    <strong>Working Hours</strong>
+                    <p>Mon - Sat, 9:00 AM - 7:00 PM</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="location-panel">
+                <h3>Our Location</h3>
+                <iframe
+                  title="EasyMart location in Bhopal"
+                  loading="lazy"
+                  src="https://www.google.com/maps?q=Bhopal%2C%20Madhya%20Pradesh%2C%20India&output=embed"
+                />
+              </div>
+
+              <div className="social-panel">
+                <h3>Social Media</h3>
+                <div className="social-grid">
+                  {["Website", "Facebook", "Instagram", "LinkedIn", "X", "YouTube"].map(
+                    (item) => (
+                      <a href="#" key={item} onClick={(event) => event.preventDefault()}>
+                        <span>{item.slice(0, 1)}</span>
+                        <strong>{item}</strong>
+                      </a>
+                    ),
+                  )}
+                </div>
+              </div>
+
+              <div className="faq-panel">
+                <h3>FAQ</h3>
+                <details open>
+                  <summary>How can I return a product?</summary>
+                  <p>
+                    Order delivered hone ke baad return option My Orders section
+                    me milega. Product unused condition me hona chahiye.
+                  </p>
+                </details>
+                <details>
+                  <summary>How does exchange work?</summary>
+                  <p>
+                    Exchange request support team review karegi, phir pickup aur
+                    replacement update My Orders me milega.
+                  </p>
+                </details>
+                <details>
+                  <summary>How many days does delivery take?</summary>
+                  <p>Usually 3-5 working days, location aur product availability par depend karta hai.</p>
+                </details>
+                <details>
+                  <summary>How can I track my order?</summary>
+                  <p>My Orders open karke 5-step delivery progress aur expected delivery date check karo.</p>
+                </details>
+              </div>
+            </div>
           ) : null}
 
           {activeFooterTab === "help" ? (
