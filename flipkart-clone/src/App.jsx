@@ -36,6 +36,12 @@ const initialAuth = {
   password: "",
 };
 
+const initialPasswordResetForm = {
+  email: "",
+  resetCode: "",
+  password: "",
+};
+
 const initialCheckoutForm = {
   fullName: "",
   phone: "",
@@ -155,6 +161,9 @@ export default function App() {
   const [showCheckoutModal, setShowCheckoutModal] = useState(false);
   const [isRegistering, setIsRegistering] = useState(false);
   const [authForm, setAuthForm] = useState(initialAuth);
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
+  const [passwordResetForm, setPasswordResetForm] = useState(initialPasswordResetForm);
+  const [visibleResetCode, setVisibleResetCode] = useState("");
   const [checkoutForm, setCheckoutForm] = useState(initialCheckoutForm);
   const [checkoutContext, setCheckoutContext] = useState(null);
   const [currentUser, setCurrentUser] = useState(() => getSavedUser());
@@ -300,14 +309,24 @@ export default function App() {
     setAuthForm((current) => ({ ...current, [field]: value }));
   };
 
+  const handlePasswordResetFieldChange = (field, value) => {
+    setPasswordResetForm((current) => ({ ...current, [field]: value }));
+  };
+
   const openAuthModal = (mode) => {
     setIsRegistering(mode === "register");
+    setShowForgotPassword(false);
+    setPasswordResetForm(initialPasswordResetForm);
+    setVisibleResetCode("");
     setShowAuthModal(true);
   };
 
   const closeAuthModal = () => {
     setShowAuthModal(false);
     setAuthForm(initialAuth);
+    setShowForgotPassword(false);
+    setPasswordResetForm(initialPasswordResetForm);
+    setVisibleResetCode("");
   };
 
   const closeAccountModal = () => {
@@ -408,6 +427,64 @@ export default function App() {
     setShowAccountModal(false);
     closeCheckoutModal();
     setToast("Signed out.");
+  };
+
+  const handleForgotPassword = async () => {
+    const email = passwordResetForm.email.trim().toLowerCase();
+
+    if (!email) {
+      setToast("Reset ke liye email address daalo.");
+      return;
+    }
+
+    try {
+      setAuthLoading(true);
+      const response = await api.post("/auth/forgot-password", { email });
+      const resetCode = response.data.resetCode || "";
+
+      setVisibleResetCode(resetCode);
+      setPasswordResetForm((current) => ({
+        ...current,
+        email,
+        resetCode,
+      }));
+      setToast("Reset code generate ho gaya.");
+    } catch (error) {
+      setToast(error.response?.data?.message || "Reset code generate nahi hua.");
+    } finally {
+      setAuthLoading(false);
+    }
+  };
+
+  const handleResetPassword = async () => {
+    const email = passwordResetForm.email.trim().toLowerCase();
+    const resetCode = passwordResetForm.resetCode.trim();
+    const password = passwordResetForm.password;
+
+    if (!email || !resetCode || !password) {
+      setToast("Email, reset code aur new password fill karo.");
+      return;
+    }
+
+    try {
+      setAuthLoading(true);
+      await api.post("/auth/reset-password", {
+        email,
+        resetCode,
+        password,
+      });
+
+      setShowForgotPassword(false);
+      setIsRegistering(false);
+      setAuthForm({ ...initialAuth, email });
+      setPasswordResetForm(initialPasswordResetForm);
+      setVisibleResetCode("");
+      setToast("Password reset ho gaya. Ab login karo.");
+    } catch (error) {
+      setToast(error.response?.data?.message || "Password reset nahi hua.");
+    } finally {
+      setAuthLoading(false);
+    }
   };
 
   const refreshCart = async (nextToken = token) => {
@@ -1973,60 +2050,149 @@ export default function App() {
           >
             <div className="auth-copy">
               <span className="section-label">Easy access</span>
-              <h2>{isRegistering ? "Create your EasyMart account" : "Login to continue"}</h2>
+              <h2>
+                {showForgotPassword
+                  ? "Reset your password"
+                  : isRegistering
+                    ? "Create your EasyMart account"
+                    : "Login to continue"}
+              </h2>
               <p>
-                Save your session, manage your cart faster, and keep the storefront
-                experience personal.
+                {showForgotPassword
+                  ? "Email daalo, reset code lo, phir new password set karo."
+                  : "Save your session, manage your cart faster, and keep the storefront experience personal."}
               </p>
             </div>
 
             <div className="auth-form">
-              {isRegistering && (
-                <input
-                  type="text"
-                  placeholder="Your name"
-                  value={authForm.name}
-                  onChange={(event) =>
-                    handleAuthFieldChange("name", event.target.value)
-                  }
-                />
+              {showForgotPassword ? (
+                <>
+                  <input
+                    type="email"
+                    placeholder="Registered email address"
+                    value={passwordResetForm.email}
+                    onChange={(event) =>
+                      handlePasswordResetFieldChange("email", event.target.value)
+                    }
+                  />
+
+                  <button
+                    className="secondary-btn full-width"
+                    disabled={authLoading}
+                    onClick={handleForgotPassword}
+                  >
+                    {authLoading ? "Please wait..." : "Get reset code"}
+                  </button>
+
+                  {visibleResetCode ? (
+                    <div className="reset-code-box">
+                      <span>Your reset code</span>
+                      <strong>{visibleResetCode}</strong>
+                      <small>Code 10 minutes tak valid rahega.</small>
+                    </div>
+                  ) : null}
+
+                  <input
+                    type="text"
+                    placeholder="Reset code"
+                    value={passwordResetForm.resetCode}
+                    onChange={(event) =>
+                      handlePasswordResetFieldChange("resetCode", event.target.value)
+                    }
+                  />
+
+                  <input
+                    type="password"
+                    placeholder="New password"
+                    value={passwordResetForm.password}
+                    onChange={(event) =>
+                      handlePasswordResetFieldChange("password", event.target.value)
+                    }
+                  />
+
+                  <button
+                    className="primary-btn full-width"
+                    disabled={authLoading}
+                    onClick={handleResetPassword}
+                  >
+                    {authLoading ? "Please wait..." : "Reset Password"}
+                  </button>
+
+                  <button
+                    className="text-btn"
+                    onClick={() => {
+                      setShowForgotPassword(false);
+                      setVisibleResetCode("");
+                    }}
+                  >
+                    Back to login
+                  </button>
+                </>
+              ) : (
+                <>
+                  {isRegistering && (
+                    <input
+                      type="text"
+                      placeholder="Your name"
+                      value={authForm.name}
+                      onChange={(event) =>
+                        handleAuthFieldChange("name", event.target.value)
+                      }
+                    />
+                  )}
+
+                  <input
+                    type="email"
+                    placeholder="Email address"
+                    value={authForm.email}
+                    onChange={(event) =>
+                      handleAuthFieldChange("email", event.target.value)
+                    }
+                  />
+
+                  <input
+                    type="password"
+                    placeholder="Password"
+                    value={authForm.password}
+                    onChange={(event) =>
+                      handleAuthFieldChange("password", event.target.value)
+                    }
+                  />
+
+                  <button
+                    className="primary-btn full-width"
+                    disabled={authLoading}
+                    onClick={isRegistering ? handleRegister : handleLogin}
+                  >
+                    {authLoading
+                      ? "Please wait..."
+                      : isRegistering
+                        ? "Register"
+                        : "Login"}
+                  </button>
+
+                  {!isRegistering ? (
+                    <button
+                      className="text-btn"
+                      onClick={() => {
+                        setPasswordResetForm({
+                          ...initialPasswordResetForm,
+                          email: authForm.email,
+                        });
+                        setShowForgotPassword(true);
+                      }}
+                    >
+                      Forgot password? Reset here
+                    </button>
+                  ) : null}
+
+                  <button className="text-btn" onClick={() => setIsRegistering((value) => !value)}>
+                    {isRegistering
+                      ? "Already registered? Switch to login"
+                      : "Need an account? Switch to register"}
+                  </button>
+                </>
               )}
-
-              <input
-                type="email"
-                placeholder="Email address"
-                value={authForm.email}
-                onChange={(event) =>
-                  handleAuthFieldChange("email", event.target.value)
-                }
-              />
-
-              <input
-                type="password"
-                placeholder="Password"
-                value={authForm.password}
-                onChange={(event) =>
-                  handleAuthFieldChange("password", event.target.value)
-                }
-              />
-
-              <button
-                className="primary-btn full-width"
-                disabled={authLoading}
-                onClick={isRegistering ? handleRegister : handleLogin}
-              >
-                {authLoading
-                  ? "Please wait..."
-                  : isRegistering
-                    ? "Register"
-                    : "Login"}
-              </button>
-
-              <button className="text-btn" onClick={() => setIsRegistering((value) => !value)}>
-                {isRegistering
-                  ? "Already registered? Switch to login"
-                  : "Need an account? Switch to register"}
-              </button>
             </div>
           </div>
         </div>

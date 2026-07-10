@@ -1030,6 +1030,27 @@
   gap: 12px;
 }
 
+.reset-code-box {
+  display: grid;
+  gap: 6px;
+  padding: 16px;
+  border-radius: 18px;
+  background: rgba(236, 61, 143, 0.1);
+  border: 1px solid rgba(236, 61, 143, 0.18);
+}
+
+.reset-code-box span,
+.reset-code-box small {
+  color: #58708d;
+  font-weight: 800;
+}
+
+.reset-code-box strong {
+  color: #ec3d8f;
+  font-size: 2rem;
+  letter-spacing: 0.12em;
+}
+
 .orders-list {
   max-height: calc(100vh - 92px);
   overflow-y: auto;
