@@ -85,6 +85,10 @@ function formatDate(value) {
 }
 
 function getDisplayOrderStatus(order) {
+  if (order?.displayStatus) {
+    return order.displayStatus;
+  }
+
   if (!order?.estimatedDelivery) {
     return order?.orderStatus || "Processing";
   }
@@ -102,9 +106,29 @@ function getDisplayOrderStatus(order) {
   return order?.orderStatus || "Processing";
 }
 
-function isActiveOrder(order) {
-  return getDisplayOrderStatus(order) !== "Delivered";
+function getOrderProgress(order) {
+  const createdAt = new Date(order?.createdAt);
+  const deliveredAt = new Date(order?.estimatedDelivery);
+
+  if (Number.isNaN(createdAt.getTime()) || Number.isNaN(deliveredAt.getTime())) {
+    return 1;
+  }
+
+  if (deliveredAt <= createdAt) {
+    return getDisplayOrderStatus(order) === "Delivered" ? 5 : 1;
+  }
+
+  const progress = (Date.now() - createdAt.getTime()) / (deliveredAt.getTime() - createdAt.getTime());
+  return Math.min(5, Math.max(1, Math.floor(progress * 5) + 1));
 }
+
+const deliverySteps = [
+  "Order placed",
+  "Packed",
+  "Shipped",
+  "Out for delivery",
+  "Delivered",
+];
 
 export default function App() {
   const [products, setProducts] = useState([]);
@@ -131,6 +155,7 @@ export default function App() {
   const [showOrdersModal, setShowOrdersModal] = useState(false);
   const [orders, setOrders] = useState([]);
   const [ordersLoading, setOrdersLoading] = useState(false);
+  const [canManageOrders, setCanManageOrders] = useState(false);
   const [showOrderSuccessModal, setShowOrderSuccessModal] = useState(false);
   const [recentOrder, setRecentOrder] = useState(null);
   const [activeFooterTab, setActiveFooterTab] = useState("about");
@@ -381,7 +406,8 @@ export default function App() {
       const response = await api.get("/orders", {
         headers: getAuthHeaders(nextToken),
       });
-      setOrders((response.data.orders || []).filter(isActiveOrder));
+      setOrders(response.data.orders || []);
+      setCanManageOrders(Boolean(response.data.canManageOrders));
     } catch (error) {
       if (error.response?.status === 401) {
         localStorage.removeItem("easymart-token");
@@ -393,6 +419,23 @@ export default function App() {
       }
 
       setToast(error.response?.data?.message || "Orders load nahi hue.");
+    } finally {
+      setOrdersLoading(false);
+    }
+  };
+
+  const handleRemoveDeliveredOrder = async (orderId) => {
+    try {
+      setOrdersLoading(true);
+      const response = await api.delete(`/orders/${orderId}`, {
+        headers: getAuthHeaders(token),
+      });
+
+      setOrders(response.data.orders || []);
+      setCanManageOrders(Boolean(response.data.canManageOrders));
+      setToast("Delivered order remove ho gaya.");
+    } catch (error) {
+      setToast(error.response?.data?.message || "Delivered order remove nahi hua.");
     } finally {
       setOrdersLoading(false);
     }
@@ -1281,42 +1324,72 @@ export default function App() {
               {ordersLoading ? (
                 <p>Orders load ho rahe hain...</p>
               ) : orders.length ? (
-                orders.map((order) => (
-                  <div key={order._id} className="order-card">
-                    <div className="order-card-top">
-                      <div>
-                        <strong>{order.orderNumber}</strong>
-                        <p>Placed on {formatDate(order.createdAt)}</p>
-                      </div>
-                      <span
-                        className={`product-badge ${
-                          getDisplayOrderStatus(order) === "Delivered"
-                            ? "delivered-badge"
-                            : ""
-                        }`}
-                      >
-                        {getDisplayOrderStatus(order)}
-                      </span>
-                    </div>
+                orders.map((order) => {
+                  const orderStatus = getDisplayOrderStatus(order);
+                  const completedSteps =
+                    orderStatus === "Delivered" ? 5 : getOrderProgress(order);
 
-                    <div className="order-items">
-                      {order.items.map((item) => (
-                        <div key={`${order._id}-${item.productId}`} className="order-line">
-                          <strong>{item.name}</strong>
-                          <p>
-                            Qty {item.quantity} | Rs. {(item.price * item.quantity).toLocaleString("en-IN")}
-                          </p>
+                  return (
+                    <div key={order._id} className="order-card">
+                      <div className="order-card-top">
+                        <div>
+                          <strong>{order.orderNumber}</strong>
+                          <p>Placed on {formatDate(order.createdAt)}</p>
                         </div>
-                      ))}
-                    </div>
+                        <span
+                          className={`product-badge ${
+                            orderStatus === "Delivered" ? "delivered-badge" : ""
+                          }`}
+                        >
+                          {orderStatus}
+                        </span>
+                      </div>
 
-                    <div className="order-meta">
-                      <span>Total: Rs. {order.totalAmount.toLocaleString("en-IN")}</span>
-                      <span>Payment: {order.shippingDetails?.paymentMethod || "N/A"}</span>
-                      <span>Expected delivery: {formatDate(order.estimatedDelivery)}</span>
+                      <div className="order-steps" aria-label="Delivery progress">
+                        {deliverySteps.map((step, index) => {
+                          const isDone = index + 1 <= completedSteps;
+
+                          return (
+                            <div
+                              key={`${order._id}-${step}`}
+                              className={`order-step ${isDone ? "done" : ""}`}
+                            >
+                              <span>{index + 1}</span>
+                              <strong>{step}</strong>
+                            </div>
+                          );
+                        })}
+                      </div>
+
+                      <div className="order-items">
+                        {order.items.map((item) => (
+                          <div key={`${order._id}-${item.productId}`} className="order-line">
+                            <strong>{item.name}</strong>
+                            <p>
+                              Qty {item.quantity} | Rs. {(item.price * item.quantity).toLocaleString("en-IN")}
+                            </p>
+                          </div>
+                        ))}
+                      </div>
+
+                      <div className="order-meta">
+                        <span>Total: Rs. {order.totalAmount.toLocaleString("en-IN")}</span>
+                        <span>Payment: {order.shippingDetails?.paymentMethod || "N/A"}</span>
+                        <span>Expected delivery: {formatDate(order.estimatedDelivery)}</span>
+                      </div>
+
+                      {canManageOrders && orderStatus === "Delivered" ? (
+                        <button
+                          className="remove-btn order-remove-btn"
+                          disabled={ordersLoading}
+                          onClick={() => handleRemoveDeliveredOrder(order._id)}
+                        >
+                          Remove delivered order
+                        </button>
+                      ) : null}
                     </div>
-                  </div>
-                ))
+                  );
+                })
               ) : (
                 <button
                   className="primary-btn full-width"
