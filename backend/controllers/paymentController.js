@@ -1,13 +1,23 @@
 const Razorpay = require("razorpay");
 
-const razorpay = new Razorpay({
-  key_id: process.env.RAZORPAY_KEY_ID,
-  key_secret: process.env.RAZORPAY_KEY_SECRET,
-});
+const getRazorpayClient = () => {
+  if (!process.env.RAZORPAY_KEY_ID || !process.env.RAZORPAY_KEY_SECRET) {
+    const error = new Error("Razorpay keys are missing in backend .env");
+    error.statusCode = 500;
+    throw error;
+  }
+
+  return new Razorpay({
+    key_id: process.env.RAZORPAY_KEY_ID,
+    key_secret: process.env.RAZORPAY_KEY_SECRET,
+  });
+};
 
 const createOrder = async (req, res) => {
   try {
     const { amount, productId, productName } = req.body;
+    const razorpay = getRazorpayClient();
+    const isTestMode = process.env.RAZORPAY_KEY_ID.startsWith("rzp_test_");
 
     if (!amount || Number(amount) <= 0) {
       return res.status(400).json({
@@ -34,6 +44,7 @@ const createOrder = async (req, res) => {
       amount: order.amount,
       currency: order.currency,
       key: process.env.RAZORPAY_KEY_ID,
+      isTestMode,
     });
   } catch (error) {
     console.log("Razorpay order error:", error);

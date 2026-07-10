@@ -595,6 +595,8 @@ export default function App() {
         return;
       }
 
+      const isUpiCheckout = currentCheckoutForm.paymentMethod === "UPI";
+
       const options = {
         key: data.key,
         amount: data.amount,
@@ -637,13 +639,37 @@ export default function App() {
           email: currentUser?.email || "test@example.com",
           contact: currentCheckoutForm.phone || "9999999999",
         },
+        readonly: {
+          name: true,
+          email: true,
+          contact: true,
+        },
+        method: isUpiCheckout
+          ? {
+              upi: true,
+              card: false,
+              netbanking: false,
+              wallet: false,
+              emi: false,
+              paylater: false,
+            }
+          : undefined,
         notes: {
           paymentMethod: currentCheckoutForm.paymentMethod,
         },
         config: {
           display: {
+            blocks: isUpiCheckout
+              ? {
+                  upi: {
+                    name: "Pay by UPI",
+                    instruments: [{ method: "upi" }],
+                  },
+                }
+              : undefined,
+            sequence: isUpiCheckout ? ["block.upi"] : undefined,
             preferences: {
-              show_default_blocks: true,
+              show_default_blocks: !isUpiCheckout,
             },
           },
         },
@@ -657,9 +683,19 @@ export default function App() {
         },
       };
 
+      if (isUpiCheckout && data.isTestMode) {
+        setToast(
+          "Razorpay test mode detect hua hai. Real UPI app se QR scan fail ho sakta hai. Live key use karo ya test UPI flow se verify karo.",
+        );
+      }
+
       const razorpay = new window.Razorpay(options);
-      razorpay.on("payment.failed", () => {
-        setToast("UPI payment failed. Dobara try karo.");
+      razorpay.on("payment.failed", (paymentError) => {
+        const failureReason =
+          paymentError?.error?.description ||
+          paymentError?.error?.reason ||
+          "UPI payment failed. Dobara try karo.";
+        setToast(failureReason);
       });
       razorpay.open();
     } catch (error) {

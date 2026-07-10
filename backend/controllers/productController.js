@@ -1,20 +1,8 @@
 const mongoose = require("mongoose");
 const Product = require("../models/Product");
-const seedProducts = require("../data/products");
 
 const getProducts = async (req, res, next) => {
   try {
-    const existingNames = new Set(
-      (await Product.find({}, "name")).map((product) => product.name),
-    );
-    const missingProducts = seedProducts.filter(
-      (product) => !existingNames.has(product.name),
-    );
-
-    if (missingProducts.length) {
-      await Product.insertMany(missingProducts);
-    }
-
     const filter = {};
 
     if (req.query.category) {
@@ -25,7 +13,7 @@ const getProducts = async (req, res, next) => {
       filter.name = { $regex: req.query.search, $options: "i" };
     }
 
-    const products = await Product.find(filter).sort({ createdAt: -1 });
+    const products = await Product.find(filter).sort({ createdAt: -1 }).lean();
 
     res.status(200).json({
       success: true,
@@ -48,7 +36,7 @@ const getProductById = async (req, res, next) => {
       });
     }
 
-    const product = await Product.findById(id);
+    const product = await Product.findById(id).lean();
 
     if (!product) {
       return res.status(404).json({
