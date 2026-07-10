@@ -4,6 +4,7 @@ function Navbar({
   cartCount,
   currentUser,
   onAccountClick,
+  onAdminClick,
   onCartClick,
   onOrdersClick,
   onLoginClick,
@@ -11,6 +12,7 @@ function Navbar({
   onRegisterClick,
   searchTerm,
   setSearchTerm,
+  showAdminButton,
 }) {
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const menuRef = useRef(null);
@@ -58,6 +60,13 @@ function Navbar({
               <span>Orders</span>
               <strong>My</strong>
             </button>
+
+            {showAdminButton ? (
+              <button className="cart-pill admin-pill" onClick={onAdminClick}>
+                <span>Admin</span>
+                <strong>Panel</strong>
+              </button>
+            ) : null}
 
             <div className="profile-menu-wrap" ref={menuRef}>
               <button

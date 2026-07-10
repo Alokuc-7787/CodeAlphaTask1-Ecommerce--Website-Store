@@ -130,6 +130,20 @@ const deliverySteps = [
   "Delivered",
 ];
 
+const adminEmails = (import.meta.env.VITE_ADMIN_EMAILS || "alokuc123@gmail.com")
+  .split(",")
+  .map((email) => email.trim().toLowerCase())
+  .filter(Boolean);
+
+const socialLinks = [
+  { label: "Website", icon: "W", url: "https://www.alokucmart.store" },
+  { label: "Facebook", icon: "F", url: "https://www.facebook.com" },
+  { label: "Instagram", icon: "I", url: "https://www.instagram.com" },
+  { label: "LinkedIn", icon: "L", url: "https://www.linkedin.com/feed/" },
+  { label: "X", icon: "X", url: "https://x.com" },
+  { label: "YouTube", icon: "Y", url: "https://www.youtube.com" },
+];
+
 export default function App() {
   const [products, setProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -159,6 +173,15 @@ export default function App() {
   const [showOrderSuccessModal, setShowOrderSuccessModal] = useState(false);
   const [recentOrder, setRecentOrder] = useState(null);
   const [activeFooterTab, setActiveFooterTab] = useState("about");
+  const [contactSubmitting, setContactSubmitting] = useState(false);
+  const [showAdminMessagesModal, setShowAdminMessagesModal] = useState(false);
+  const [contactMessages, setContactMessages] = useState([]);
+  const [contactStats, setContactStats] = useState({
+    totalMessages: 0,
+    todayMessages: 0,
+    emailMessages: 0,
+  });
+  const [contactMessagesLoading, setContactMessagesLoading] = useState(false);
 
   useEffect(() => {
     if (!toast) return undefined;
@@ -271,6 +294,7 @@ export default function App() {
     const price = item.product?.price || 0;
     return sum + price * item.quantity;
   }, 0);
+  const isAdminUser = adminEmails.includes(String(currentUser?.email || "").toLowerCase());
 
   const handleAuthFieldChange = (field, value) => {
     setAuthForm((current) => ({ ...current, [field]: value }));
@@ -439,6 +463,71 @@ export default function App() {
     } finally {
       setOrdersLoading(false);
     }
+  };
+
+  const handleContactMessageSubmit = async (event) => {
+    event.preventDefault();
+
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+    const payload = {
+      name: String(formData.get("name") || "").trim(),
+      email: String(formData.get("email") || "").trim().toLowerCase(),
+      phone: String(formData.get("phone") || "").trim(),
+      subject: String(formData.get("subject") || "").trim(),
+      message: String(formData.get("message") || "").trim(),
+    };
+
+    if (!payload.name || !payload.email || !payload.phone || !payload.subject || !payload.message) {
+      setToast("Contact form ke sab fields fill karo.");
+      return;
+    }
+
+    try {
+      setContactSubmitting(true);
+      await api.post("/contact", payload);
+      form.reset();
+      setToast("Message admin ke paas pahunch gaya.");
+    } catch (error) {
+      setToast(error.response?.data?.message || "Message send nahi hua.");
+    } finally {
+      setContactSubmitting(false);
+    }
+  };
+
+  const refreshContactMessages = async (nextToken = token) => {
+    if (!nextToken || !isAdminUser) return;
+
+    try {
+      setContactMessagesLoading(true);
+      const response = await api.get("/contact/messages", {
+        headers: getAuthHeaders(nextToken),
+      });
+      setContactMessages(response.data.messages || []);
+      setContactStats(
+        response.data.stats || {
+          totalMessages: 0,
+          todayMessages: 0,
+          emailMessages: 0,
+        },
+      );
+    } catch (error) {
+      setToast(error.response?.data?.message || "Contact messages load nahi hue.");
+    } finally {
+      setContactMessagesLoading(false);
+    }
+  };
+
+  const openAdminMessages = async () => {
+    if (!requireLogin()) return;
+
+    if (!isAdminUser) {
+      setToast("Admin panel sirf admin ke liye hai.");
+      return;
+    }
+
+    setShowAdminMessagesModal(true);
+    await refreshContactMessages();
   };
 
   const handleAddToCart = async (product) => {
@@ -804,6 +893,7 @@ export default function App() {
         cartCount={cartCount}
         currentUser={currentUser}
         onAccountClick={() => setShowAccountModal(true)}
+        onAdminClick={openAdminMessages}
         onCartClick={() => setShowCartModal(true)}
         onOrdersClick={async () => {
           await refreshOrders();
@@ -814,6 +904,7 @@ export default function App() {
         onRegisterClick={() => openAuthModal("register")}
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
+        showAdminButton={isAdminUser}
       />
 
       <main className="page-content">
@@ -1129,22 +1220,31 @@ export default function App() {
               <div className="contact-main-grid">
                 <form
                   className="contact-form-panel"
-                  onSubmit={(event) => {
-                    event.preventDefault();
-                    setToast("Message received. EasyMart support jaldi contact karega.");
-                  }}
+                  onSubmit={handleContactMessageSubmit}
                 >
                   <span className="section-label">Contact Form</span>
                   <h3>Send Message</h3>
                   <div className="contact-form-grid">
-                    <input type="text" placeholder="Full Name" required />
-                    <input type="email" placeholder="Email Address" required />
-                    <input type="tel" placeholder="Mobile Number" required />
-                    <input type="text" placeholder="Subject" required />
-                    <textarea placeholder="Message" required />
+                    <input
+                      name="name"
+                      type="text"
+                      placeholder="Full Name"
+                      defaultValue={currentUser?.name || ""}
+                      required
+                    />
+                    <input
+                      name="email"
+                      type="email"
+                      placeholder="Email Address"
+                      defaultValue={currentUser?.email || ""}
+                      required
+                    />
+                    <input name="phone" type="tel" placeholder="Mobile Number" required />
+                    <input name="subject" type="text" placeholder="Subject" required />
+                    <textarea name="message" placeholder="Message" required />
                   </div>
-                  <button className="primary-btn full-width" type="submit">
-                    Send Message
+                  <button className="primary-btn full-width" type="submit" disabled={contactSubmitting}>
+                    {contactSubmitting ? "Sending..." : "Send Message"}
                   </button>
                 </form>
 
@@ -1184,14 +1284,12 @@ export default function App() {
               <div className="social-panel">
                 <h3>Social Media</h3>
                 <div className="social-grid">
-                  {["Website", "Facebook", "Instagram", "LinkedIn", "X", "YouTube"].map(
-                    (item) => (
-                      <a href="#" key={item} onClick={(event) => event.preventDefault()}>
-                        <span>{item.slice(0, 1)}</span>
-                        <strong>{item}</strong>
+                  {socialLinks.map((item) => (
+                      <a href={item.url} key={item.label} target="_blank" rel="noreferrer">
+                        <span>{item.icon}</span>
+                        <strong>{item.label}</strong>
                       </a>
-                    ),
-                  )}
+                    ))}
                 </div>
               </div>
 
@@ -1512,6 +1610,82 @@ export default function App() {
                 >
                   Continue shopping
                 </button>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showAdminMessagesModal && isAdminUser && (
+        <div
+          className="modal-backdrop"
+          onClick={() => setShowAdminMessagesModal(false)}
+          role="presentation"
+        >
+          <div
+            className="modal-card admin-messages-modal"
+            onClick={(event) => event.stopPropagation()}
+            role="dialog"
+            aria-modal="true"
+          >
+            <button className="icon-close" onClick={() => setShowAdminMessagesModal(false)}>
+              Close
+            </button>
+
+            <div className="admin-panel-hero">
+              <div>
+                <span className="section-label">Admin Panel</span>
+                <h2>Contact Messages</h2>
+                <p>Contact form se jo user message bhejega, admin yahin se dekh sakta hai.</p>
+              </div>
+              <button
+                className="primary-btn"
+                disabled={contactMessagesLoading}
+                onClick={() => refreshContactMessages()}
+              >
+                {contactMessagesLoading ? "Loading..." : "Refresh"}
+              </button>
+            </div>
+
+            <div className="admin-stats-grid">
+              <div>
+                <span>Total Messages</span>
+                <strong>{contactStats.totalMessages}</strong>
+              </div>
+              <div>
+                <span>Today</span>
+                <strong>{contactStats.todayMessages}</strong>
+              </div>
+              <div>
+                <span>Emails</span>
+                <strong>{contactStats.emailMessages}</strong>
+              </div>
+            </div>
+
+            <div className="admin-message-list">
+              {contactMessagesLoading ? (
+                <div className="admin-empty-message">Loading messages...</div>
+              ) : contactMessages.length ? (
+                contactMessages.map((item) => (
+                  <article className="admin-message-card" key={item._id}>
+                    <div className="admin-message-top">
+                      <div>
+                        <strong>{item.name}</strong>
+                        <span>{item.email}</span>
+                      </div>
+                      <small>{formatDate(item.createdAt)}</small>
+                    </div>
+                    <div className="admin-message-meta">
+                      <span>Phone: {item.phone}</span>
+                      <span>Subject: {item.subject}</span>
+                    </div>
+                    <p>{item.message}</p>
+                  </article>
+                ))
+              ) : (
+                <div className="admin-empty-message">
+                  Abhi koi contact message nahi aaya.
+                </div>
               )}
             </div>
           </div>
