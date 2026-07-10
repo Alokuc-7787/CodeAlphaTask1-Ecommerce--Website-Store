@@ -46,6 +46,8 @@ const initialCheckoutForm = {
   paymentMethod: "Cash on Delivery",
 };
 
+const ONLINE_PAYMENT_METHODS = ["Online Payment", "UPI", "Card", "Netbanking", "Wallet"];
+
 const api = axios.create({
   baseURL: API_BASE_URL,
 });
@@ -657,6 +659,25 @@ export default function App() {
         },
         config: {
           display: {
+            blocks: {
+              cards: {
+                name: "Cards",
+                instruments: [{ method: "card" }],
+              },
+              upi: {
+                name: "UPI",
+                instruments: [{ method: "upi" }],
+              },
+              netbanking: {
+                name: "Netbanking",
+                instruments: [{ method: "netbanking" }],
+              },
+              wallet: {
+                name: "Wallet",
+                instruments: [{ method: "wallet" }],
+              },
+            },
+            sequence: ["block.cards", "block.upi", "block.netbanking", "block.wallet"],
             preferences: {
               show_default_blocks: true,
             },
@@ -702,7 +723,7 @@ export default function App() {
       return;
     }
 
-    if (checkoutForm.paymentMethod === "UPI") {
+    if (ONLINE_PAYMENT_METHODS.includes(checkoutForm.paymentMethod)) {
       await openRazorpayCheckout();
       return;
     }
@@ -1446,8 +1467,11 @@ export default function App() {
                 }
               >
                 <option>Cash on Delivery</option>
+                <option>Online Payment</option>
                 <option>UPI</option>
                 <option>Card</option>
+                <option>Netbanking</option>
+                <option>Wallet</option>
               </select>
               <textarea
                 className="checkout-address"
