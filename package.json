@@ -1,9 +1,4 @@
 {
-  "scripts": {
-    "dev": "npm --prefix flipkart-clone run dev",
-    "build": "npm --prefix flipkart-clone run build",
-    "preview": "npm --prefix flipkart-clone run preview"
-  },
   "dependencies": {
     "razorpay": "^2.9.6"
   }

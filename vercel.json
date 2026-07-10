@@ -1,6 +1,0 @@
-{
-  "buildCommand": "npm --prefix flipkart-clone run build",
-  "outputDirectory": "flipkart-clone/dist",
-  "installCommand": "npm --prefix flipkart-clone install",
-  "framework": "vite"
-}
