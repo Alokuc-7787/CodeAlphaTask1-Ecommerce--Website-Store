@@ -102,6 +102,10 @@ function getDisplayOrderStatus(order) {
   return order?.orderStatus || "Processing";
 }
 
+function isActiveOrder(order) {
+  return getDisplayOrderStatus(order) !== "Delivered";
+}
+
 export default function App() {
   const [products, setProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -377,7 +381,7 @@ export default function App() {
       const response = await api.get("/orders", {
         headers: getAuthHeaders(nextToken),
       });
-      setOrders(response.data.orders || []);
+      setOrders((response.data.orders || []).filter(isActiveOrder));
     } catch (error) {
       if (error.response?.status === 401) {
         localStorage.removeItem("easymart-token");

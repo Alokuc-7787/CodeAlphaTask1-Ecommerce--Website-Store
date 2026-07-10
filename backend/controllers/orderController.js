@@ -1,15 +1,26 @@
 const Order = require("../models/Order");
 
+const removeDeliveredOrders = async (userId) => {
+  const now = new Date();
+
+  await Order.deleteMany({
+    userId,
+    $or: [
+      { estimatedDelivery: { $lte: now } },
+      { orderStatus: "Delivered" },
+    ],
+  });
+};
+
 const getUserOrders = async (req, res, next) => {
   try {
-    const now = new Date();
+    await removeDeliveredOrders(req.user._id);
 
-    await Order.deleteMany({
+    const orders = await Order.find({
       userId: req.user._id,
-      estimatedDelivery: { $lt: now },
-    });
-
-    const orders = await Order.find({ userId: req.user._id }).sort({ createdAt: -1 });
+      estimatedDelivery: { $gt: new Date() },
+      orderStatus: { $ne: "Delivered" },
+    }).sort({ createdAt: -1 });
 
     res.status(200).json({
       success: true,
