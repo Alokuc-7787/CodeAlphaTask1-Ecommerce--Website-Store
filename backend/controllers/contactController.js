@@ -69,7 +69,47 @@ const getContactMessages = async (req, res, next) => {
   }
 };
 
+const removeContactMessage = async (req, res, next) => {
+  try {
+    if (!isContactAdmin(req.user)) {
+      return res.status(403).json({
+        success: false,
+        message: "Only admin can remove contact messages",
+      });
+    }
+
+    const message = await ContactMessage.findById(req.params.id);
+
+    if (!message) {
+      return res.status(404).json({
+        success: false,
+        message: "Contact message not found",
+      });
+    }
+
+    await message.deleteOne();
+
+    const messages = await ContactMessage.find().sort({ createdAt: -1 });
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    res.status(200).json({
+      success: true,
+      message: "Contact message removed",
+      stats: {
+        totalMessages: messages.length,
+        todayMessages: messages.filter((item) => item.createdAt >= today).length,
+        emailMessages: messages.filter((item) => Boolean(item.email)).length,
+      },
+      messages,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   createContactMessage,
   getContactMessages,
+  removeContactMessage,
 };

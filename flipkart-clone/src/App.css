@@ -1125,6 +1125,13 @@
   flex-wrap: wrap;
 }
 
+.admin-message-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
 .admin-message-top strong {
   display: block;
   color: #10253d;
@@ -1133,9 +1140,44 @@
 
 .admin-message-top span,
 .admin-message-top small,
+.admin-message-date,
 .admin-message-meta,
 .admin-message-card p {
   color: #58708d;
+}
+
+.admin-message-date {
+  display: block;
+  margin-top: 4px;
+}
+
+.new-contact-badge,
+.solved-remove-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 34px;
+  padding: 8px 15px;
+  border-radius: 999px;
+  border: 0;
+  font-size: 0.82rem;
+  font-weight: 1000;
+}
+
+.new-contact-badge {
+  background: rgba(236, 61, 143, 0.12);
+  color: #ec3d8f;
+}
+
+.solved-remove-btn {
+  background: linear-gradient(135deg, #0abf73, #0aa86a);
+  color: #ffffff;
+  cursor: pointer;
+  box-shadow: 0 12px 24px rgba(10, 191, 115, 0.22);
+}
+
+.solved-remove-btn:hover {
+  transform: translateY(-1px);
 }
 
 .admin-message-meta {

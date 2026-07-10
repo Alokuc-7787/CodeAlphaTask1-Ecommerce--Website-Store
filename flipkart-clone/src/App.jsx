@@ -518,6 +518,28 @@ export default function App() {
     }
   };
 
+  const handleRemoveContactMessage = async (messageId) => {
+    try {
+      setContactMessagesLoading(true);
+      const response = await api.delete(`/contact/messages/${messageId}`, {
+        headers: getAuthHeaders(token),
+      });
+      setContactMessages(response.data.messages || []);
+      setContactStats(
+        response.data.stats || {
+          totalMessages: 0,
+          todayMessages: 0,
+          emailMessages: 0,
+        },
+      );
+      setToast("Problem solved message remove ho gaya.");
+    } catch (error) {
+      setToast(error.response?.data?.message || "Message remove nahi hua.");
+    } finally {
+      setContactMessagesLoading(false);
+    }
+  };
+
   const openAdminMessages = async () => {
     if (!requireLogin()) return;
 
@@ -1673,9 +1695,23 @@ export default function App() {
                         <strong>{item.name}</strong>
                         <span>{item.email}</span>
                       </div>
-                      <small>{formatDate(item.createdAt)}</small>
+                      <div className="admin-message-actions">
+                        <span className="new-contact-badge">New Contact</span>
+                        <button
+                          className="solved-remove-btn"
+                          disabled={contactMessagesLoading}
+                          onClick={() => handleRemoveContactMessage(item._id)}
+                        >
+                          Problem Solved - Remove
+                        </button>
+                      </div>
                     </div>
+                    <small className="admin-message-date">
+                      {new Date(item.createdAt).toLocaleString("en-IN")}
+                    </small>
                     <div className="admin-message-meta">
+                      <span>Name: {item.name}</span>
+                      <span>Email: {item.email}</span>
                       <span>Phone: {item.phone}</span>
                       <span>Subject: {item.subject}</span>
                     </div>
