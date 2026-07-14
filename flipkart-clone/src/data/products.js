@@ -168,7 +168,7 @@ const products = [
     id: 12,
     name: "Redmi Note 13",
     category: "Mobiles",
-    price: 17999,
+    price: 1,
     originalPrice: 21999,
     rating: 4.3,
     delivery: "Delivery by tomorrow",

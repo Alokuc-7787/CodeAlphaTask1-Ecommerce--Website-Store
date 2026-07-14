@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useMemo, useState } from "react";
 import Navbar from "./components/Navbar";
 import ProductCard from "./components/ProductCard";
+import fallbackProducts from "./data/products";
 import "./App.css";
 
 const defaultApiBaseUrl = import.meta.env.PROD
@@ -58,6 +59,8 @@ const api = axios.create({
   baseURL: API_BASE_URL,
 });
 
+const PRODUCT_CACHE_KEY = "easymart-products-cache";
+
 function getSavedUser() {
   const raw = localStorage.getItem("easymart-user");
   if (!raw) return null;
@@ -71,6 +74,21 @@ function getSavedUser() {
 
 function getSavedToken() {
   return localStorage.getItem("easymart-token");
+}
+
+function getInitialProducts() {
+  const raw = localStorage.getItem(PRODUCT_CACHE_KEY);
+
+  if (!raw) return fallbackProducts;
+
+  try {
+    const savedProducts = JSON.parse(raw);
+    return Array.isArray(savedProducts) && savedProducts.length
+      ? savedProducts
+      : fallbackProducts;
+  } catch {
+    return fallbackProducts;
+  }
 }
 
 function getAuthHeaders(token) {
@@ -151,7 +169,7 @@ const socialLinks = [
 ];
 
 export default function App() {
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState(() => getInitialProducts());
   const [searchTerm, setSearchTerm] = useState("");
   const [activeCategory, setActiveCategory] = useState("All");
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -170,7 +188,7 @@ export default function App() {
   const [token, setToken] = useState(() => getSavedToken());
   const [toast, setToast] = useState("");
   const [sortBy, setSortBy] = useState("featured");
-  const [loadingProducts, setLoadingProducts] = useState(true);
+  const [loadingProducts, setLoadingProducts] = useState(false);
   const [authLoading, setAuthLoading] = useState(false);
   const [cartLoading, setCartLoading] = useState(false);
   const [purchaseLoading, setPurchaseLoading] = useState(false);
@@ -221,14 +239,21 @@ export default function App() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        setLoadingProducts(true);
+        setLoadingProducts(products.length === 0);
         const response = await api.get("/products");
-        setProducts(response.data.products || []);
+        const nextProducts = response.data.products || [];
+
+        if (nextProducts.length) {
+          setProducts(nextProducts);
+          localStorage.setItem(PRODUCT_CACHE_KEY, JSON.stringify(nextProducts));
+        }
       } catch (error) {
-        setToast(
-          error.response?.data?.message ||
-            "Products load nahi hue. Backend server check karo.",
-        );
+        if (!products.length) {
+          setToast(
+            error.response?.data?.message ||
+              "Products load nahi hue. Backend server check karo.",
+          );
+        }
       } finally {
         setLoadingProducts(false);
       }
@@ -1195,7 +1220,7 @@ export default function App() {
             <div className="products-grid">
               {filteredProducts.map((product) => (
                 <ProductCard
-                  key={product._id}
+                  key={product._id || product.id || product.name}
                   product={product}
                   onAddToCart={handleAddToCart}
                   onBuyNow={() => openCheckout({ type: "buy-now", product })}
