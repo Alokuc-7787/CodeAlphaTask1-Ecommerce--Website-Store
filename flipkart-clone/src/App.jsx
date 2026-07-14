@@ -291,6 +291,8 @@ export default function App() {
   }, [token]);
 
   const filteredProducts = useMemo(() => {
+    if (!token) return [];
+
     const normalizedSearch = searchTerm.trim().toLowerCase();
     const nextProducts = products.filter((product) => {
       const matchesCategory =
@@ -316,9 +318,9 @@ export default function App() {
     }
 
     return sortedProducts;
-  }, [activeCategory, products, searchTerm, sortBy]);
+  }, [activeCategory, products, searchTerm, sortBy, token]);
 
-  const featuredProduct = filteredProducts[0] ?? products[0];
+  const featuredProduct = token ? filteredProducts[0] ?? products[0] : null;
   const totalSavings = filteredProducts.reduce(
     (sum, product) => sum + ((product.originalPrice || product.price) - product.price),
     0,
@@ -1115,6 +1117,11 @@ export default function App() {
               <button
                 className="primary-btn"
                 onClick={() => {
+                  if (!token) {
+                    openAuthModal("login");
+                    return;
+                  }
+
                   setActiveCategory("All");
                   setSearchTerm("");
                 }}
@@ -1132,7 +1139,7 @@ export default function App() {
 
             <div className="hero-stats">
               <div>
-                <strong>{products.length}+</strong>
+                <strong>{token ? `${products.length}+` : "Login"}</strong>
                 <span>Products</span>
               </div>
               <div>
@@ -1194,8 +1201,11 @@ export default function App() {
             <div>
               <span className="section-label">Catalog</span>
               <h3>
-                {filteredProducts.length} products for{" "}
-                {activeCategory === "All" ? "all categories" : activeCategory}
+                {token
+                  ? `${filteredProducts.length} products for ${
+                      activeCategory === "All" ? "all categories" : activeCategory
+                    }`
+                  : "Login required to view products"}
               </h3>
             </div>
 
@@ -1211,7 +1221,15 @@ export default function App() {
             </label>
           </div>
 
-          {loadingProducts ? (
+          {!token ? (
+            <div className="empty-state">
+              <h3>Login required</h3>
+              <p>Products dekhne ke liye pehle login karo.</p>
+              <button className="primary-btn" onClick={() => openAuthModal("login")}>
+                Login to view products
+              </button>
+            </div>
+          ) : loadingProducts ? (
             <div className="empty-state">
               <h3>Products load ho rahe hain...</h3>
               <p>Backend aur MongoDB response ka wait ho raha hai.</p>
