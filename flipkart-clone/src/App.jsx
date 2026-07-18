@@ -1124,6 +1124,11 @@ export default function App() {
             <div className="offer-visual">
               <img src={heroProducts} alt="Smartwatch, smartphone, and tablet deals" />
             </div>
+            <div className="hero-slider-dots" aria-hidden="true">
+              <span className="active" />
+              <span />
+              <span />
+            </div>
           </section>
         ) : null}
 
