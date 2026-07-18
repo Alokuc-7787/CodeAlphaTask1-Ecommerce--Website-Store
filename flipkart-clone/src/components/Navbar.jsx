@@ -12,10 +12,12 @@ function Navbar({
   onLoginClick,
   onLogoutClick,
   onRegisterClick,
+  onNavigate,
   searchTerm,
   setSearchTerm,
   showAdminButton,
 }) {
+  const [showMobileNav, setShowMobileNav] = useState(false);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const menuRef = useRef(null);
 
@@ -55,6 +57,18 @@ function Navbar({
         </label>
 
         <div className="header-actions">
+          <button
+            className="mobile-menu-toggle"
+            type="button"
+            onClick={() => setShowMobileNav((value) => !value)}
+            aria-label="Open menu"
+            aria-expanded={showMobileNav}
+          >
+            <span />
+            <span />
+            <span />
+          </button>
+
           <button className="cart-pill" onClick={onCartClick}>
             <span>Cart</span>
             <strong>{cartCount}</strong>
@@ -123,16 +137,19 @@ function Navbar({
         </div>
       </div>
 
-      <nav className="nav-link-row" aria-label="Store sections">
+      <nav
+        className={`nav-link-row ${showMobileNav ? "open" : ""}`}
+        aria-label="Store sections"
+      >
         {navItems.map((item) => (
           <button
             key={item}
             type="button"
             className="nav-link-pill"
             onClick={() => {
-              if (["Mobiles", "Fashion", "Electronics"].includes(item)) {
-                setSearchTerm("");
-              }
+              setSearchTerm("");
+              setShowMobileNav(false);
+              onNavigate?.(item);
             }}
           >
             {item}

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Navbar from "./components/Navbar";
 import ProductCard from "./components/ProductCard";
 import categoryElectronics from "./assets/category-electronics.svg";
@@ -234,6 +234,9 @@ export default function App() {
     emailMessages: 0,
   });
   const [contactMessagesLoading, setContactMessagesLoading] = useState(false);
+  const dealsSectionRef = useRef(null);
+  const catalogSectionRef = useRef(null);
+  const footerSectionRef = useRef(null);
 
   useEffect(() => {
     if (!toast) return undefined;
@@ -681,6 +684,42 @@ export default function App() {
     await refreshContactMessages();
   };
 
+  const scrollToSection = (sectionRef) => {
+    window.setTimeout(() => {
+      sectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 80);
+  };
+
+  const handleHeaderNavigation = (item) => {
+    if (["Mobiles", "Fashion", "Electronics"].includes(item)) {
+      setActiveCategory(item);
+      scrollToSection(catalogSectionRef);
+      return;
+    }
+
+    if (item === "More") {
+      setActiveCategory("All");
+      scrollToSection(catalogSectionRef);
+      return;
+    }
+
+    if (item === "Deals") {
+      scrollToSection(dealsSectionRef);
+      return;
+    }
+
+    if (item === "About Us") {
+      setActiveFooterTab("about");
+      scrollToSection(footerSectionRef);
+      return;
+    }
+
+    if (item === "Contact") {
+      setActiveFooterTab("contact");
+      scrollToSection(footerSectionRef);
+    }
+  };
+
   const handleAddToCart = async (product) => {
     if (!requireLogin()) return;
 
@@ -1053,6 +1092,7 @@ export default function App() {
         onLoginClick={() => openAuthModal("login")}
         onLogoutClick={handleLogout}
         onRegisterClick={() => openAuthModal("register")}
+        onNavigate={handleHeaderNavigation}
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
         showAdminButton={isAdminUser}
@@ -1060,7 +1100,7 @@ export default function App() {
 
       <main className="page-content">
         {featuredProduct ? (
-          <section className="top-offer-banner">
+          <section className="top-offer-banner" ref={dealsSectionRef}>
             <div className="offer-copy">
               <span className="section-label">Mega Sale</span>
               <div className="banner-price-row">
@@ -1228,7 +1268,7 @@ export default function App() {
           ))}
         </section>
 
-        <section className="catalog-panel">
+        <section className="catalog-panel" ref={catalogSectionRef}>
           <div className="catalog-toolbar">
             <div>
               <span className="section-label">Catalog</span>
@@ -1287,7 +1327,7 @@ export default function App() {
         </section>
       </main>
 
-      <footer className="site-footer">
+      <footer className="site-footer" ref={footerSectionRef}>
         <div className="footer-header">
           <span className="section-label">Aarohimart Footer</span>
           <h2>Helpful links, support details, and brand info in one clean space.</h2>
