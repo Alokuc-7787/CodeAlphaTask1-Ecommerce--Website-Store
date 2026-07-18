@@ -283,26 +283,46 @@
   position: sticky;
   top: 0;
   z-index: 10;
-  display: grid;
-  grid-template-columns: 1.1fr 1.2fr auto;
-  gap: 18px;
-  align-items: center;
   width: 100%;
   margin: 0 0 28px;
-  padding: 18px clamp(16px, 3vw, 40px);
-  background: rgba(11, 26, 47, 0.86);
-  border: 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 16px clamp(16px, 3vw, 40px) 12px;
+  background:
+    radial-gradient(circle at top right, rgba(255, 196, 87, 0.13), transparent 28%),
+    linear-gradient(135deg, rgba(3, 18, 35, 0.94), rgba(12, 47, 83, 0.92));
+  border: 1px solid rgba(142, 183, 223, 0.18);
+  border-top: 0;
   border-radius: 0 0 28px 28px;
   backdrop-filter: blur(18px);
   color: #f6f8fc;
   box-shadow: 0 18px 50px rgba(17, 36, 58, 0.18);
 }
 
+.nav-main-row {
+  display: grid;
+  grid-template-columns: minmax(180px, 0.8fr) minmax(280px, 1.25fr) auto;
+  gap: 22px;
+  align-items: center;
+}
+
 .brand-block {
   display: flex;
-  flex-direction: column;
-  gap: 4px;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.brand-logo-mark {
+  display: inline-grid;
+  flex: 0 0 auto;
+  width: 36px;
+  height: 36px;
+  place-items: center;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #ffb347, #ffd56a);
+  color: #10253d;
+  font-size: 0.78rem;
+  font-weight: 1000;
+  letter-spacing: -0.04em;
 }
 
 .brand-kicker,
@@ -325,7 +345,7 @@
 .brand-block p {
   margin: 0;
   color: rgba(246, 248, 252, 0.76);
-  font-size: 0.95rem;
+  font-size: 0.82rem;
 }
 
 .search-field {
@@ -417,6 +437,7 @@
 .header-actions {
   justify-content: flex-end;
   gap: 12px;
+  flex-wrap: wrap;
 }
 
 .auth-actions {
@@ -461,6 +482,37 @@
   border-radius: 999px;
   background: #ec3d8f;
   color: #ffffff;
+}
+
+.nav-link-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  overflow-x: auto;
+}
+
+.nav-link-row::-webkit-scrollbar {
+  display: none;
+}
+
+.nav-link-pill {
+  flex: 0 0 auto;
+  padding: 7px 12px;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(246, 248, 252, 0.86);
+  font-size: 0.78rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.nav-link-pill:hover {
+  background: rgba(255, 196, 87, 0.18);
+  color: #ffd56a;
 }
 
 .hero-panel,
@@ -2033,7 +2085,7 @@ button:disabled {
 }
 
 @media (max-width: 1080px) {
-  .site-header,
+  .nav-main-row,
   .hero-panel,
   .category-strip,
   .auth-modal,
@@ -2130,6 +2182,23 @@ button:disabled {
     border-radius: 0 0 18px 18px;
   }
 
+  .nav-main-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 10px;
+  }
+
+  .brand-block {
+    gap: 8px;
+  }
+
+  .brand-logo-mark {
+    width: 32px;
+    height: 32px;
+    border-radius: 10px;
+    font-size: 0.7rem;
+  }
+
   .page-content {
     padding: 0 10px 34px;
   }
@@ -2148,6 +2217,8 @@ button:disabled {
   }
 
   .search-field {
+    grid-column: 1 / -1;
+    order: 3;
     gap: 5px;
   }
 
@@ -2170,13 +2241,15 @@ button:disabled {
 
   .header-actions,
   .auth-actions {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    display: flex;
+    flex-direction: row;
+    align-items: center;
     gap: 8px;
+    justify-content: flex-end;
   }
 
   .auth-actions .primary-btn {
-    grid-column: 1 / -1;
+    display: none;
   }
 
   .cart-pill,
@@ -2197,7 +2270,42 @@ button:disabled {
   }
 
   .profile-pill small {
-    max-width: 86px;
+    display: none;
+  }
+
+  .nav-link-row {
+    display: none;
+  }
+
+  .profile-menu {
+    right: 0;
+    min-width: 160px;
+  }
+
+  .cart-pill span,
+  .admin-pill span {
+    display: none;
+  }
+
+  .admin-pill strong {
+    min-width: 42px;
+    padding-inline: 8px;
+  }
+
+  .brand-block p {
+    display: none;
+  }
+
+  .brand-block .brand-kicker {
+    background: transparent;
+    padding: 0;
+    color: #f6f8fc;
+    font-size: 0.9rem;
+    letter-spacing: 0.02em;
+  }
+
+  .profile-pill small {
+    max-width: 70px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
