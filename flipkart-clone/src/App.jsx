@@ -2,6 +2,11 @@ import axios from "axios";
 import { useEffect, useMemo, useState } from "react";
 import Navbar from "./components/Navbar";
 import ProductCard from "./components/ProductCard";
+import categoryElectronics from "./assets/category-electronics.svg";
+import categoryFashion from "./assets/category-fashion.svg";
+import categoryMobile from "./assets/category-mobile.svg";
+import categoryMore from "./assets/category-more.svg";
+import heroGadgets from "./assets/hero-gadgets.svg";
 import fallbackProducts from "./data/products";
 import "./App.css";
 
@@ -22,25 +27,25 @@ const categories = [
     id: "Mobiles",
     label: "Mobiles",
     offer: "Up to 40% Off",
-    image: "https://images.unsplash.com/photo-1598327105666-5b89351aff97?auto=format&fit=crop&w=360&q=80",
+    image: categoryMobile,
   },
   {
     id: "Fashion",
     label: "Fashion",
     offer: "Up to 60% Off",
-    image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=360&q=80",
+    image: categoryFashion,
   },
   {
     id: "Electronics",
     label: "Electronics",
     offer: "Up to 49% Off",
-    image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=360&q=80",
+    image: categoryElectronics,
   },
   {
     id: "All",
     label: "More Products",
     offer: "Explore more",
-    image: "https://images.unsplash.com/photo-1607082349566-187342175e2f?auto=format&fit=crop&w=360&q=80",
+    image: categoryMore,
   },
 ];
 
@@ -1117,15 +1122,7 @@ export default function App() {
               </button>
             </div>
             <div className="offer-visual">
-              <div className="showcase-phone phone-back" />
-              <div className="showcase-phone phone-front" />
-              <div className="showcase-watch">
-                <span />
-              </div>
-              <div className="showcase-headphones">
-                <span />
-                <span />
-              </div>
+              <img src={heroGadgets} alt="Mobiles, smartwatch, and headphones" />
             </div>
           </section>
         ) : null}

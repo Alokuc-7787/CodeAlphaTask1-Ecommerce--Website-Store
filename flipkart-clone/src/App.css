@@ -167,6 +167,8 @@
   grid-column: 2;
   grid-row: 1;
   position: relative;
+  display: grid;
+  place-items: center;
   min-height: 290px;
   border-radius: 28px;
   overflow: hidden;
@@ -175,6 +177,15 @@
     radial-gradient(circle at 72% 42%, rgba(255, 255, 255, 0.26), transparent 20%),
     linear-gradient(135deg, rgba(67, 151, 224, 0.28), rgba(7, 28, 52, 0.08));
   border: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.offer-visual img {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 620px);
+  max-height: 330px;
+  object-fit: contain;
+  filter: drop-shadow(0 28px 30px rgba(0, 10, 24, 0.38));
 }
 
 .offer-visual::before,
@@ -199,6 +210,15 @@
   background: radial-gradient(circle, rgba(76, 164, 255, 0.28), transparent 66%);
 }
 
+.showcase-phone,
+.phone-back,
+.phone-front,
+.showcase-watch,
+.showcase-headphones {
+  display: none;
+}
+
+/*
 .showcase-phone {
   position: absolute;
   border-radius: 26px;
@@ -316,6 +336,7 @@
 .showcase-headphones span:last-child {
   right: -30px;
 }
+*/
 
 .offer-poster,
 .banner-sale-badge,
@@ -870,7 +891,7 @@
   width: 88px;
   height: 96px;
   border-radius: 18px;
-  object-fit: cover;
+  object-fit: contain;
   box-shadow: 0 14px 24px rgba(16, 37, 61, 0.16);
 }
 
