@@ -1037,27 +1037,52 @@ export default function App() {
         {featuredProduct ? (
           <section className="top-offer-banner">
             <div className="offer-copy">
-              <span className="section-label">Dhamaka Sale</span>
+              <span className="section-label">Mega Sale</span>
               <div className="banner-price-row">
                 <strong>Rs. {featuredProduct.price.toLocaleString("en-IN")}</strong>
                 <span>
                   Rs. {(featuredProduct.originalPrice || featuredProduct.price).toLocaleString("en-IN")}
                 </span>
-                <em>Biggest offer live now</em>
+                <em>Big deals on top brands</em>
               </div>
-              <strong>{featuredProduct.name}</strong>
+              <h2>
+                Big Deals on <span>Top Brands</span>
+              </h2>
               <p>
-                Featured deal live now with up to Rs.{" "}
-                {((featuredProduct.originalPrice || featuredProduct.price) - featuredProduct.price).toLocaleString("en-IN")} off.
+                Best products at unbeatable prices
               </p>
+              <button
+                className="shop-now-btn"
+                onClick={() => {
+                  if (!token) {
+                    openAuthModal("login");
+                    return;
+                  }
+
+                  setActiveCategory("All");
+                  setSearchTerm("");
+                }}
+              >
+                Shop Now
+              </button>
 
               <div className="banner-features">
-                {(featuredProduct.features || []).slice(0, 3).map((feature) => (
-                  <div key={feature} className="banner-feature-card">
-                    <strong>{feature}</strong>
-                    <span>Featured benefit</span>
-                  </div>
-                ))}
+                <div className="banner-feature-card">
+                  <strong>Free Delivery</strong>
+                  <span>On all orders</span>
+                </div>
+                <div className="banner-feature-card">
+                  <strong>7 Days Return</strong>
+                  <span>No questions asked</span>
+                </div>
+                <div className="banner-feature-card">
+                  <strong>Best Quality</strong>
+                  <span>Top products</span>
+                </div>
+                <div className="banner-feature-card">
+                  <strong>Secure Payment</strong>
+                  <span>100% secure</span>
+                </div>
               </div>
             </div>
 
@@ -1068,7 +1093,7 @@ export default function App() {
                 className="primary-btn"
                 onClick={() => setSelectedProduct(featuredProduct)}
               >
-                Grab Offer
+                Shop Now
               </button>
             </div>
             <div className="offer-visual">
