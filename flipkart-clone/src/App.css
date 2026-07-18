@@ -177,37 +177,144 @@
   border: 1px solid rgba(255, 255, 255, 0.14);
 }
 
-.offer-visual::before {
-  content: "";
-  position: absolute;
-  left: 16%;
-  top: 18%;
-  width: 30%;
-  height: 64%;
-  border-radius: 26px;
-  background:
-    linear-gradient(150deg, rgba(255, 255, 255, 0.22), transparent 28%),
-    linear-gradient(160deg, #7ab7ff, #174b80);
-  box-shadow:
-    0 22px 42px rgba(1, 12, 24, 0.35),
-    inset 0 0 0 7px rgba(5, 18, 34, 0.9);
-  transform: rotate(3deg);
-}
-
+.offer-visual::before,
 .offer-visual::after {
   content: "";
   position: absolute;
-  right: 14%;
-  top: 28%;
-  width: 34%;
-  height: 38%;
-  border: 16px solid #071a30;
-  border-bottom-width: 28px;
-  border-radius: 50% 50% 46% 46%;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.offer-visual::before {
+  inset: auto 7% 12% 12%;
+  height: 18px;
+  background: radial-gradient(ellipse, rgba(1, 12, 24, 0.45), transparent 68%);
+}
+
+.offer-visual::after {
+  right: 8%;
+  top: 12%;
+  width: 180px;
+  height: 180px;
+  background: radial-gradient(circle, rgba(76, 164, 255, 0.28), transparent 66%);
+}
+
+.showcase-phone {
+  position: absolute;
+  border-radius: 26px;
   box-shadow:
-    -76px 36px 0 -22px #ffb72f,
-    -76px 36px 0 -9px #0a1f38,
-    0 20px 34px rgba(0, 0, 0, 0.3);
+    0 26px 42px rgba(0, 0, 0, 0.32),
+    inset 0 0 0 7px #071a30;
+}
+
+.phone-back {
+  left: 17%;
+  top: 24%;
+  width: 24%;
+  height: 54%;
+  background:
+    radial-gradient(circle at 24% 22%, #071a30 0 7px, transparent 8px),
+    radial-gradient(circle at 24% 34%, #071a30 0 7px, transparent 8px),
+    radial-gradient(circle at 36% 28%, #071a30 0 5px, transparent 6px),
+    linear-gradient(155deg, #b8d7ff, #3977b2);
+  transform: rotate(-6deg);
+}
+
+.phone-back::after {
+  content: "";
+  position: absolute;
+  left: 44%;
+  top: 42%;
+  width: 24px;
+  height: 28px;
+  border-radius: 50% 50% 46% 46%;
+  background: rgba(255, 255, 255, 0.88);
+}
+
+.phone-front {
+  left: 38%;
+  top: 10%;
+  width: 25%;
+  height: 66%;
+  background:
+    radial-gradient(circle at 50% 4%, #071a30 0 16px, transparent 17px),
+    linear-gradient(145deg, transparent 0 42%, rgba(255, 255, 255, 0.34) 43% 46%, transparent 47%),
+    linear-gradient(160deg, #8ed0ff, #1c63b2 56%, #071a30);
+  transform: rotate(2deg);
+}
+
+.showcase-watch {
+  position: absolute;
+  left: 50%;
+  bottom: 19%;
+  width: 88px;
+  height: 104px;
+  border: 10px solid #ffba27;
+  border-left-color: #071a30;
+  border-radius: 32px;
+  background: linear-gradient(145deg, #09182a, #122c49);
+  box-shadow: 0 22px 34px rgba(0, 0, 0, 0.34);
+  transform: rotate(-10deg);
+  z-index: 2;
+}
+
+.showcase-watch::before,
+.showcase-watch::after {
+  content: "";
+  position: absolute;
+  left: 18px;
+  width: 34px;
+  height: 26px;
+  border-radius: 13px;
+  background: #071a30;
+}
+
+.showcase-watch::before {
+  top: -33px;
+}
+
+.showcase-watch::after {
+  bottom: -33px;
+}
+
+.showcase-watch span {
+  position: absolute;
+  inset: 22px 14px;
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 28% 45%, #8cf1ff 0 3px, transparent 4px),
+    radial-gradient(circle at 48% 38%, #ff5aa7 0 3px, transparent 4px),
+    radial-gradient(circle at 63% 54%, #ffd12f 0 3px, transparent 4px);
+}
+
+.showcase-headphones {
+  position: absolute;
+  right: 6%;
+  bottom: 16%;
+  width: 168px;
+  height: 170px;
+  border: 18px solid #071a30;
+  border-bottom-color: transparent;
+  border-radius: 50% 50% 40% 40%;
+  filter: drop-shadow(0 24px 30px rgba(0, 0, 0, 0.32));
+}
+
+.showcase-headphones span {
+  position: absolute;
+  bottom: -34px;
+  width: 52px;
+  height: 82px;
+  border-radius: 22px;
+  background: linear-gradient(160deg, #243b58, #071a30);
+  border: 5px solid rgba(255, 255, 255, 0.12);
+}
+
+.showcase-headphones span:first-child {
+  left: -30px;
+}
+
+.showcase-headphones span:last-child {
+  right: -30px;
 }
 
 .offer-poster,
@@ -700,20 +807,29 @@
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 16px;
-  margin: 26px 0;
+  margin: 12px 0 26px;
+}
+
+.top-categories-title {
+  margin: 26px 0 0;
+  color: #10253d;
+  font-size: 1.45rem;
+  letter-spacing: -0.03em;
 }
 
 .category-tile {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 6px;
-  padding: 20px;
+  display: grid;
+  grid-template-columns: 1fr 88px;
+  align-items: center;
+  gap: 12px;
+  min-height: 138px;
+  padding: 18px;
   border: 1px solid rgba(198, 214, 231, 0.7);
   border-radius: 24px;
   color: #11243a;
   text-align: left;
   cursor: pointer;
+  overflow: hidden;
   transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
 }
 
@@ -723,24 +839,39 @@
 }
 
 .category-tile.active {
-  background: linear-gradient(150deg, #10253d, #20496f);
-  color: #f6f8fc;
-  border-color: rgba(16, 37, 61, 0.4);
+  background: linear-gradient(150deg, #eef6ff, #ffffff);
+  color: #10253d;
+  border-color: rgba(24, 144, 255, 0.34);
 }
 
 .category-tile.active small,
-.category-tile.active .tile-icon {
-  color: rgba(246, 248, 252, 0.82);
+.category-tile.active span {
+  color: #255784;
 }
 
-.tile-icon {
-  color: #32689d;
-  font-weight: 700;
-  letter-spacing: 0.03em;
+.category-tile div {
+  display: grid;
+  gap: 7px;
+  position: relative;
+  z-index: 1;
 }
 
 .category-tile small {
   color: #58708d;
+}
+
+.category-tile span {
+  color: #255784;
+  font-size: 0.78rem;
+  font-weight: 900;
+}
+
+.category-tile img {
+  width: 88px;
+  height: 96px;
+  border-radius: 18px;
+  object-fit: cover;
+  box-shadow: 0 14px 24px rgba(16, 37, 61, 0.16);
 }
 
 .catalog-panel {
@@ -2160,7 +2291,6 @@ button:disabled {
 @media (max-width: 1080px) {
   .nav-main-row,
   .hero-panel,
-  .category-strip,
   .auth-modal,
   .product-modal,
   .checkout-grid {
@@ -2525,16 +2655,38 @@ button:disabled {
   .category-strip {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 10px;
-    margin: 16px 0;
+    margin: 10px 0 16px;
+  }
+
+  .top-categories-title {
+    margin-top: 18px;
+    font-size: 1.15rem;
   }
 
   .category-tile {
-    gap: 4px;
-    padding: 14px;
+    grid-template-columns: 1fr 58px;
+    gap: 7px;
+    min-height: 92px;
+    padding: 10px;
+    border-radius: 14px;
+  }
+
+  .category-tile strong {
+    font-size: 0.78rem;
   }
 
   .category-tile small {
-    font-size: 0.78rem;
+    font-size: 0.62rem;
+  }
+
+  .category-tile span {
+    font-size: 0.6rem;
+  }
+
+  .category-tile img {
+    width: 58px;
+    height: 66px;
+    border-radius: 12px;
   }
 
   .catalog-toolbar {

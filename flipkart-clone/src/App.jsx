@@ -18,10 +18,30 @@ const normalizeApiBaseUrl = (url) => {
 const API_BASE_URL = normalizeApiBaseUrl(import.meta.env.VITE_API_BASE_URL);
 
 const categories = [
-  { id: "All", label: "All", icon: "Grid", description: "Everyday essentials and fresh launches" },
-  { id: "Mobiles", label: "Mobiles", icon: "Phone", description: "5G phones, cameras, and flagship picks" },
-  { id: "Fashion", label: "Fashion", icon: "Style", description: "Apparel, shoes, and wearables" },
-  { id: "Electronics", label: "Electronics", icon: "Tech", description: "Audio, laptops, and smart home gear" },
+  {
+    id: "Mobiles",
+    label: "Mobiles",
+    offer: "Up to 40% Off",
+    image: "https://images.unsplash.com/photo-1598327105666-5b89351aff97?auto=format&fit=crop&w=360&q=80",
+  },
+  {
+    id: "Fashion",
+    label: "Fashion",
+    offer: "Up to 60% Off",
+    image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=360&q=80",
+  },
+  {
+    id: "Electronics",
+    label: "Electronics",
+    offer: "Up to 49% Off",
+    image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=360&q=80",
+  },
+  {
+    id: "All",
+    label: "More Products",
+    offer: "Explore more",
+    image: "https://images.unsplash.com/photo-1607082349566-187342175e2f?auto=format&fit=crop&w=360&q=80",
+  },
 ];
 
 const sortOptions = [
@@ -1097,33 +1117,14 @@ export default function App() {
               </button>
             </div>
             <div className="offer-visual">
-              <div className="banner-sale-badge">Dhamaka Sale</div>
-              <div className="offer-poster">
-                <div className="offer-rays" />
-                <div className="offer-spark spark-one" />
-                <div className="offer-spark spark-two" />
-                <div className="offer-spark spark-three" />
-                <div className="offer-badge">
-                  <span className="offer-badge-top">100K Shopper</span>
-                  <strong>Dhamaka</strong>
-                  <strong>Offer</strong>
-                </div>
+              <div className="showcase-phone phone-back" />
+              <div className="showcase-phone phone-front" />
+              <div className="showcase-watch">
+                <span />
               </div>
-              <div className="banner-visual-card top">
-                <span>Special Offer</span>
-                <strong>
-                  {Math.round(
-                    (((featuredProduct.originalPrice || featuredProduct.price) -
-                      featuredProduct.price) /
-                      (featuredProduct.originalPrice || featuredProduct.price)) *
-                      100,
-                  )}
-                  % OFF
-                </strong>
-              </div>
-              <div className="banner-visual-card bottom">
-                <span>Featured Pick</span>
-                <strong>{featuredProduct.name}</strong>
+              <div className="showcase-headphones">
+                <span />
+                <span />
               </div>
             </div>
           </section>
@@ -1205,6 +1206,7 @@ export default function App() {
           ) : null}
         </section>
 
+        <h3 className="top-categories-title">Top Categories</h3>
         <section className="category-strip">
           {categories.map((category) => (
             <button
@@ -1214,9 +1216,12 @@ export default function App() {
               }`}
               onClick={() => setActiveCategory(category.id)}
             >
-              <span className="tile-icon">{category.icon}</span>
-              <strong>{category.label}</strong>
-              <small>{category.description}</small>
+              <div>
+                <strong>{category.label}</strong>
+                <small>{category.offer}</small>
+                <span>Shop Now</span>
+              </div>
+              <img src={category.image} alt={category.label} />
             </button>
           ))}
         </section>
