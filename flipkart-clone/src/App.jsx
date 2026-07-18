@@ -6,7 +6,7 @@ import categoryElectronics from "./assets/category-electronics.svg";
 import categoryFashion from "./assets/category-fashion.svg";
 import categoryMobile from "./assets/category-mobile.svg";
 import categoryMore from "./assets/category-more.svg";
-import heroGadgets from "./assets/hero-gadgets.svg";
+import heroProducts from "./assets/hero-products.png";
 import fallbackProducts from "./data/products";
 import "./App.css";
 
@@ -1122,7 +1122,7 @@ export default function App() {
               </button>
             </div>
             <div className="offer-visual">
-              <img src={heroGadgets} alt="Mobiles, smartwatch, and headphones" />
+              <img src={heroProducts} alt="Smartwatch, smartphone, and tablet deals" />
             </div>
           </section>
         ) : null}
