@@ -43,20 +43,7 @@ function Navbar({
           </div>
         </div>
 
-        <label className="search-field">
-          <span>Search</span>
-          <div className="search-shell">
-            <span className="search-icon">Search</span>
-            <input
-              className="search-input"
-              placeholder="Search products, brands, and categories"
-              value={searchTerm}
-              onChange={(event) => setSearchTerm(event.target.value)}
-            />
-          </div>
-        </label>
-
-        <div className="header-actions">
+        <div className="mobile-search-row">
           <button
             className="mobile-menu-toggle"
             type="button"
@@ -69,6 +56,21 @@ function Navbar({
             <span />
           </button>
 
+          <label className="search-field">
+            <span>Search</span>
+            <div className="search-shell">
+              <span className="search-icon">Search</span>
+              <input
+                className="search-input"
+                placeholder="Search products, brands, and categories"
+                value={searchTerm}
+                onChange={(event) => setSearchTerm(event.target.value)}
+              />
+            </div>
+          </label>
+        </div>
+
+        <div className="header-actions">
           <button className="cart-pill" onClick={onCartClick}>
             <span>Cart</span>
             <strong>{cartCount}</strong>
