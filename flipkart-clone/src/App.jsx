@@ -883,7 +883,7 @@ export default function App() {
         productId: currentCheckoutContext?.product?._id,
         productName:
           currentCheckoutContext?.type === "cart"
-            ? "EasyMart Cart Checkout"
+            ? "Aarohimart Cart Checkout"
             : currentCheckoutContext?.product?.name,
       });
 
@@ -898,7 +898,7 @@ export default function App() {
         key: data.key,
         amount: data.amount,
         currency: data.currency,
-        name: "EasyMart",
+        name: "Aarohimart",
         description:
           currentCheckoutContext?.type === "cart"
             ? "Cart checkout"
@@ -932,7 +932,7 @@ export default function App() {
           }
         },
         prefill: {
-          name: currentCheckoutForm.fullName || currentUser?.name || "EasyMart User",
+          name: currentCheckoutForm.fullName || currentUser?.name || "Aarohimart User",
           email: currentUser?.email || "test@example.com",
           contact: currentCheckoutForm.phone || "9999999999",
         },
@@ -1135,7 +1135,7 @@ export default function App() {
         <section className="hero-panel">
           <div className="hero-copy">
             <span className="eyebrow">Smart shopping, cleaner experience</span>
-            <h1>EasyMart now feels like a real storefront, not a rough demo.</h1>
+            <h1>Aarohimart now feels like a real storefront, not a rough demo.</h1>
             <p>
               Explore curated categories, faster search, cleaner product cards,
               and a smoother login experience in one responsive screen.
@@ -1289,7 +1289,7 @@ export default function App() {
 
       <footer className="site-footer">
         <div className="footer-header">
-          <span className="section-label">EasyMart Footer</span>
+          <span className="section-label">Aarohimart Footer</span>
           <h2>Helpful links, support details, and brand info in one clean space.</h2>
           <p>
             Footer me quick company info, contact options, aur shopping help rakha gaya hai
@@ -1303,7 +1303,7 @@ export default function App() {
             onClick={() => setActiveFooterTab("about")}
           >
             <span className="footer-card-kicker">About Us</span>
-            <strong>EasyMart story, vision, and shopping promise.</strong>
+            <strong>Aarohimart story, vision, and shopping promise.</strong>
             <p>Know who we are and why the storefront is built for simpler buying.</p>
           </button>
 
@@ -1313,7 +1313,7 @@ export default function App() {
           >
             <span className="footer-card-kicker">Contact</span>
             <strong>Reach support quickly for delivery or payment help.</strong>
-            <p>Use email, phone, or address details to contact the EasyMart team.</p>
+            <p>Use email, phone, or address details to contact the Aarohimart team.</p>
           </button>
 
           <button
@@ -1329,10 +1329,10 @@ export default function App() {
         <div className="footer-detail-panel">
           {activeFooterTab === "about" ? (
             <>
-              <span className="section-label">About EasyMart</span>
+              <span className="section-label">About Aarohimart</span>
               <h3>Built to make product discovery and checkout feel smooth.</h3>
               <p>
-                EasyMart focuses on curated shopping, fast checkout, clear pricing, and
+                Aarohimart focuses on curated shopping, fast checkout, clear pricing, and
                 premium presentation so customers can browse offers without confusion.
               </p>
               <div className="footer-detail-points">
@@ -1356,7 +1356,7 @@ export default function App() {
             <div className="contact-experience">
               <div className="contact-hero">
                 <div className="contact-copy">
-                  <span className="contact-pill">Contact EasyMart</span>
+                  <span className="contact-pill">Contact Aarohimart</span>
                   <h3>Contact Us</h3>
                   <p>
                     We'd love to hear from you. Have a question, suggestion, or
@@ -1376,7 +1376,7 @@ export default function App() {
                     <em>ONLINE</em>
                   </div>
                   <div className="support-chat-bubble">
-                    Hi! Main EasyMart AI support hu. Order, exchange, delivery,
+                    Hi! Main Aarohimart AI support hu. Order, exchange, delivery,
                     return ya payment ke baare me pooch sakte ho.
                   </div>
                   <div className="support-chip-row">
@@ -1431,7 +1431,7 @@ export default function App() {
                   <div>
                     <span className="contact-icon">@</span>
                     <strong>Email</strong>
-                    <p>support@easymart.in</p>
+                    <p>support@aarohimart.in</p>
                   </div>
                   <div>
                     <span className="contact-icon">P</span>
@@ -1449,7 +1449,7 @@ export default function App() {
               <div className="location-panel">
                 <h3>Our Location</h3>
                 <iframe
-                  title="EasyMart location in Bhopal"
+                  title="Aarohimart location in Bhopal"
                   loading="lazy"
                   src="https://www.google.com/maps?q=Bhopal%2C%20Madhya%20Pradesh%2C%20India&output=embed"
                 />
@@ -1945,7 +1945,7 @@ export default function App() {
         <div className="modal-backdrop order-processing-backdrop" role="presentation">
           <div className="modal-card processing-modal" role="dialog" aria-modal="true">
             <div className="processing-pulse" />
-            <span className="section-label">EasyMart</span>
+            <span className="section-label">Aarohimart</span>
             <h2>Placing your order...</h2>
             <p>
               Order confirm kiya ja raha hai. Thoda sa wait karo, tumhara order
@@ -2129,7 +2129,7 @@ export default function App() {
                 {showForgotPassword
                   ? "Reset your password"
                   : isRegistering
-                    ? "Create your EasyMart account"
+                    ? "Create your Aarohimart account"
                     : "Login to continue"}
               </h2>
               <p>

@@ -59,14 +59,14 @@ export default function Home() {
         key: data.key,
         amount: data.amount,
         currency: data.currency,
-        name: "EasyMart",
+        name: "Aarohimart",
         description: product.name,
         order_id: data.order_id,
         handler: function (response) {
           alert(`Payment Successful. Payment ID: ${response.razorpay_payment_id}`);
         },
         prefill: {
-          name: "EasyMart User",
+          name: "Aarohimart User",
           email: "test@example.com",
           contact: "9999999999",
         },

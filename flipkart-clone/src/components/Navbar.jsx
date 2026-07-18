@@ -34,9 +34,9 @@ function Navbar({
     <header className="site-header">
       <div className="nav-main-row">
         <div className="brand-block">
-          <span className="brand-logo-mark">EM</span>
+          <span className="brand-logo-mark">AM</span>
           <div>
-            <span className="brand-kicker">EasyMart</span>
+            <span className="brand-kicker">Aarohimart</span>
             <p>Premium deals for mobiles, fashion, and electronics.</p>
           </div>
         </div>
