@@ -7,6 +7,9 @@ import categoryFashion from "./assets/category-fashion.svg";
 import categoryMobile from "./assets/category-mobile.svg";
 import categoryMore from "./assets/category-more.svg";
 import heroProducts from "./assets/hero-products.png";
+import heroStationeryOne from "./assets/hero-stationery-1.png";
+import heroStationeryTwo from "./assets/hero-stationery-2.png";
+import heroStationeryThree from "./assets/hero-stationery-3.png";
 import fallbackProducts from "./data/products";
 import "./App.css";
 
@@ -54,6 +57,13 @@ const sortOptions = [
   { id: "price-low", label: "Price: Low to High" },
   { id: "price-high", label: "Price: High to Low" },
   { id: "rating", label: "Top Rated" },
+];
+
+const heroSlides = [
+  { image: heroProducts, alt: "Smartwatch, smartphone, and tablet deals" },
+  { image: heroStationeryOne, alt: "Premium notebooks and pen stationery deals" },
+  { image: heroStationeryTwo, alt: "Student stationery desk essentials" },
+  { image: heroStationeryThree, alt: "School bag and study stationery essentials" },
 ];
 
 const initialAuth = {
@@ -234,9 +244,11 @@ export default function App() {
     emailMessages: 0,
   });
   const [contactMessagesLoading, setContactMessagesLoading] = useState(false);
+  const [activeHeroSlide, setActiveHeroSlide] = useState(0);
   const dealsSectionRef = useRef(null);
   const catalogSectionRef = useRef(null);
   const footerSectionRef = useRef(null);
+  const heroCarouselRef = useRef(null);
 
   useEffect(() => {
     if (!toast) return undefined;
@@ -720,6 +732,22 @@ export default function App() {
     }
   };
 
+  const handleHeroCarouselScroll = (event) => {
+    const { scrollLeft, clientWidth } = event.currentTarget;
+    setActiveHeroSlide(Math.round(scrollLeft / clientWidth));
+  };
+
+  const goToHeroSlide = (slideIndex) => {
+    const carousel = heroCarouselRef.current;
+    if (!carousel) return;
+
+    carousel.scrollTo({
+      left: carousel.clientWidth * slideIndex,
+      behavior: "smooth",
+    });
+    setActiveHeroSlide(slideIndex);
+  };
+
   const handleAddToCart = async (product) => {
     if (!requireLogin()) return;
 
@@ -1162,12 +1190,26 @@ export default function App() {
               </button>
             </div>
             <div className="offer-visual">
-              <img src={heroProducts} alt="Smartwatch, smartphone, and tablet deals" />
+              <div
+                className="offer-carousel"
+                ref={heroCarouselRef}
+                onScroll={handleHeroCarouselScroll}
+              >
+                {heroSlides.map((slide) => (
+                  <img key={slide.alt} src={slide.image} alt={slide.alt} />
+                ))}
+              </div>
             </div>
-            <div className="hero-slider-dots" aria-hidden="true">
-              <span className="active" />
-              <span />
-              <span />
+            <div className="hero-slider-dots" aria-label="Hero banners">
+              {heroSlides.map((slide, index) => (
+                <button
+                  key={slide.alt}
+                  type="button"
+                  className={activeHeroSlide === index ? "active" : ""}
+                  onClick={() => goToHeroSlide(index)}
+                  aria-label={`Show banner ${index + 1}`}
+                />
+              ))}
             </div>
           </section>
         ) : null}
