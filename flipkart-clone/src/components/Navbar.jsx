@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import aarohimartLogo from "../assets/aarohimart-logo.png";
 
 const navItems = ["Mobiles", "Fashion", "Electronics", "More", "Deals", "About Us", "Contact"];
 
@@ -36,7 +37,9 @@ function Navbar({
     <header className="site-header">
       <div className="nav-main-row">
         <div className="brand-block">
-          <span className="brand-logo-mark">AM</span>
+          <span className="brand-logo-mark">
+            <img src={aarohimartLogo} alt="Aarohimart logo" />
+          </span>
           <div>
             <span className="brand-kicker">Aarohimart</span>
             <p>Premium deals for mobiles, fashion, and electronics.</p>
