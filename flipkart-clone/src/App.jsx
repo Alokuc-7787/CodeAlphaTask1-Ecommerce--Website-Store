@@ -1547,12 +1547,12 @@ export default function App() {
                   <div>
                     <span className="contact-icon">@</span>
                     <strong>Email</strong>
-                    <p>support@aarohimart.in</p>
+                    <p>alokuc123@gmail.com</p>
                   </div>
                   <div>
                     <span className="contact-icon">P</span>
                     <strong>Phone</strong>
-                    <p>+91 9304154904</p>
+                    <p>+91 8252531354</p>
                   </div>
                   <div>
                     <span className="contact-icon">H</span>
@@ -1681,7 +1681,7 @@ export default function App() {
               </div>
               <div>
                 <strong>Contact</strong>
-                <p>Phone, email, aur working hours ke liye Contact section use karein.</p>
+                <p>Email: alokuc123@gmail.com | Phone: +91 8252531354</p>
               </div>
               <div>
                 <strong>Mission</strong>
