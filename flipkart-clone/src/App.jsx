@@ -1428,28 +1428,44 @@ export default function App() {
 
         <div className="footer-detail-panel">
           {activeFooterTab === "about" ? (
-            <>
-              <span className="section-label">About Aarohimart</span>
-              <h3>Built to make product discovery and checkout feel smooth.</h3>
-              <p>
-                Aarohimart focuses on curated shopping, fast checkout, clear pricing, and
-                premium presentation so customers can browse offers without confusion.
-              </p>
-              <div className="footer-detail-points">
-                <div>
-                  <strong>What we do</strong>
-                  <span>Mobile accessories, stationery, electronics, and featured daily offers.</span>
-                </div>
-                <div>
-                  <strong>Our promise</strong>
-                  <span>Simple buying flow, transparent pricing, and quick order updates.</span>
-                </div>
-                <div>
-                  <strong>Customer focus</strong>
-                  <span>Clean browsing, better checkout, and easier post-order tracking.</span>
+            <div className="about-experience">
+              <div className="about-video-card">
+                <span className="section-label">About Aarohimart</span>
+                <h3>Sasamusa ka trusted shop aur online service point.</h3>
+                <p>
+                  Aarohimart me mobile accessories, online all work, stationery, aur
+                  mobile repair services ek hi jagah milti hain. Shop Sasamusa me
+                  Ibrahim Memorial High School ke bagal me located hai.
+                </p>
+                <div className="about-location-pill">
+                  Sasamusa, Ibrahim Memorial High School ke bagal me
                 </div>
               </div>
-            </>
+
+              <div className="about-service-grid">
+                <div>
+                  <strong>Products & Services</strong>
+                  <span>Mobile accessories, stationery, electronics, online work, and mobile repair.</span>
+                </div>
+                <div>
+                  <strong>Trust Points</strong>
+                  <span>Genuine products, affordable price, fast support, and secure payment.</span>
+                </div>
+                <div>
+                  <strong>Delivery & Service</strong>
+                  <span>Local delivery support, quick help, and simple return/exchange guidance.</span>
+                </div>
+                <div>
+                  <strong>Contact Info</strong>
+                  <span>Phone, email, address, and working hours Contact section me available hain.</span>
+                </div>
+              </div>
+
+              <div className="about-mission-card">
+                <span>Mission</span>
+                <strong>Customer ko best product best price par dena.</strong>
+              </div>
+            </div>
           ) : null}
 
           {activeFooterTab === "contact" ? (

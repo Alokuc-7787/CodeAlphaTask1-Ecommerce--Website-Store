@@ -1917,6 +1917,92 @@ button:disabled {
   color: rgba(246, 248, 252, 0.72);
 }
 
+.about-experience {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  animation: videoOpen 0.62s cubic-bezier(0.2, 0.85, 0.2, 1.1) both;
+}
+
+.about-video-card {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(22px, 4vw, 38px);
+  border-radius: 28px;
+  background:
+    radial-gradient(circle at 82% 18%, rgba(255, 199, 44, 0.22), transparent 28%),
+    linear-gradient(135deg, #061121, #0f3558 58%, #06213a);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.24);
+}
+
+.about-video-card::after {
+  content: "";
+  position: absolute;
+  inset: auto -12% -42% 42%;
+  height: 180px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.09);
+  transform: rotate(-8deg);
+}
+
+.about-video-card h3 {
+  position: relative;
+  max-width: 760px;
+  margin: 12px 0;
+  font-size: clamp(1.9rem, 4vw, 3.4rem);
+  line-height: 0.98;
+}
+
+.about-video-card p {
+  position: relative;
+  max-width: 760px;
+  color: rgba(246, 248, 252, 0.8);
+  font-size: 1rem;
+}
+
+.about-location-pill {
+  position: relative;
+  display: inline-flex;
+  width: fit-content;
+  margin-top: 20px;
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: rgba(255, 199, 44, 0.14);
+  color: #ffd66b;
+  font-weight: 800;
+}
+
+.about-service-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.about-service-grid div,
+.about-mission-card {
+  padding: 18px;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.about-service-grid strong,
+.about-mission-card strong {
+  display: block;
+  color: #ffffff;
+}
+
+.about-service-grid span,
+.about-mission-card span {
+  display: block;
+  margin-top: 7px;
+  color: rgba(246, 248, 252, 0.72);
+}
+
+.about-mission-card {
+  background: linear-gradient(135deg, rgba(255, 199, 44, 0.16), rgba(24, 144, 255, 0.12));
+}
+
 .contact-experience {
   display: flex;
   flex-direction: column;
@@ -3001,6 +3087,19 @@ button:disabled {
 
   .footer-detail-panel {
     padding: 14px;
+  }
+
+  .about-video-card {
+    padding: 22px;
+    border-radius: 24px;
+  }
+
+  .about-service-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .about-mission-card {
+    border-radius: 20px;
   }
 
   .contact-benefits,
