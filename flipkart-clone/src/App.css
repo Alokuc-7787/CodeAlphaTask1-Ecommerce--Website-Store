@@ -996,6 +996,13 @@
   overflow: hidden;
 }
 
+.product-image-button {
+  width: 100%;
+  padding: 0;
+  border: 0;
+  cursor: pointer;
+}
+
 .product-image-wrap img,
 .product-modal-media img {
   width: 100%;

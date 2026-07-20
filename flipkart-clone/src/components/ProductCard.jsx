@@ -5,10 +5,15 @@ function ProductCard({ product, onAddToCart, onBuyNow, onQuickView }) {
 
   return (
     <article className="product-card">
-      <div className="product-image-wrap">
+      <button
+        type="button"
+        className="product-image-wrap product-image-button"
+        onClick={() => onQuickView(product)}
+        aria-label={`View ${product.name}`}
+      >
         <img src={product.image} alt={product.name} />
         <span className="discount-badge">{discount}% off</span>
-      </div>
+      </button>
 
       <div className="product-copy">
         <div className="product-topline">
