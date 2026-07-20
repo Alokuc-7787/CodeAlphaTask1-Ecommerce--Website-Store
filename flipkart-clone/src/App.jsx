@@ -34,7 +34,7 @@ const categories = [
   },
   {
     id: "Fashion",
-    label: "Fashion",
+    label: "Stationery",
     offer: "Up to 60% Off",
     image: categoryFashion,
   },
@@ -709,7 +709,13 @@ export default function App() {
       return;
     }
 
-    if (["Fashion", "Electronics"].includes(item)) {
+    if (item === "Stationery") {
+      setActiveCategory("Fashion");
+      scrollToSection(catalogSectionRef);
+      return;
+    }
+
+    if (["Electronics"].includes(item)) {
       setActiveCategory(item);
       scrollToSection(catalogSectionRef);
       return;
@@ -1426,7 +1432,7 @@ export default function App() {
               <div className="footer-detail-points">
                 <div>
                   <strong>What we do</strong>
-                  <span>Mobile accessories, fashion, electronics, and featured daily offers.</span>
+                  <span>Mobile accessories, stationery, electronics, and featured daily offers.</span>
                 </div>
                 <div>
                   <strong>Our promise</strong>
