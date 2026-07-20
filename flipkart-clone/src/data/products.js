@@ -1,16 +1,16 @@
 const mobileAccessories = [
-  ["Smart Watch", 750, 1650, 4.4, "Daily use smart watch", "/mobile-accessories/smart-watch.svg"],
-  ["Music Box", 450, 650, 4.2, "Portable mini speaker", "/mobile-accessories/music-box.svg"],
-  ["Bluetooth Earphones", 600, 900, 4.3, "Neckband bluetooth earphones", "/mobile-accessories/bluetooth-earphones.svg"],
-  ["Keypad Phone Charger", 80, 120, 4.0, "Basic phone charger", "/mobile-accessories/keypad-phone-charger.svg"],
-  ["Voice Mike", 1050, 1299, 4.5, "Wireless voice microphone", "/mobile-accessories/voice-mike.svg"],
-  ["Mobile Stand", 150, 250, 4.1, "Foldable mobile stand", "/mobile-accessories/mobile-stand.svg"],
-  ["iPhone Charger", 250, 950, 4.2, "USB-C iPhone charger", "/mobile-accessories/iphone-charger.svg"],
-  ["Video Stand", 700, 999, 4.3, "Selfie and video stand", "/mobile-accessories/video-stand.svg"],
-  ["Airphone", 100, 150, 4.0, "Wired airphone", "/mobile-accessories/airphone.svg"],
-  ["Camera Screen Guard", 100, 150, 4.1, "Camera lens protector", "/mobile-accessories/camera-screen-guard.svg"],
-  ["Charger", 350, 500, 4.2, "Fast mobile charger", "/mobile-accessories/charger.svg"],
-  ["Data Cable", 150, 250, 4.0, "USB data cable", "/mobile-accessories/data-cable.svg"],
+  ["Smart Watch", 750, 1650, 4.4, "Daily use smart watch", "/mobile-accessories/smart-watch.jpg.jpeg"],
+  ["Music Box", 450, 650, 4.2, "Portable mini speaker", "/mobile-accessories/music-box.jpg.jpeg"],
+  ["Bluetooth Earphones", 600, 900, 4.3, "Neckband bluetooth earphones", "/mobile-accessories/bluetooth-earphones.jpg.jpeg"],
+  ["Keypad Phone Charger", 80, 120, 4.0, "Basic phone charger", "/mobile-accessories/keypad-phone-charger.jpg.jpeg"],
+  ["Voice Mike", 1050, 1299, 4.5, "Wireless voice microphone", "/mobile-accessories/voice-mike.jpg.jpeg"],
+  ["Mobile Stand", 150, 250, 4.1, "Foldable mobile stand", "/mobile-accessories/mobile-stand.jpg.jpeg"],
+  ["iPhone Charger", 250, 950, 4.2, "USB-C iPhone charger", "/mobile-accessories/iphone-charger.jpg.jpeg"],
+  ["Video Stand", 700, 999, 4.3, "Selfie and video stand", "/mobile-accessories/video-stand.jpg.jpeg"],
+  ["Airphone", 100, 150, 4.0, "Wired airphone", "/mobile-accessories/airphone.jpg.jpeg"],
+  ["Camera Screen Guard", 100, 150, 4.1, "Camera lens protector", "/mobile-accessories/camera-screen-guard.jpg.jpeg"],
+  ["Charger", 350, 500, 4.2, "Fast mobile charger", "/mobile-accessories/charger.jpg.jpeg"],
+  ["Data Cable", 150, 250, 4.0, "USB data cable", "/mobile-accessories/data-cable.jpg.jpeg"],
 ];
 
 const products = [
