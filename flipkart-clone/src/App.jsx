@@ -52,6 +52,12 @@ const categories = [
   },
 ];
 
+const getCategoryDisplayName = (category) => {
+  if (category === "Mobiles") return "Mobile Accessories";
+  if (category === "Fashion") return "Stationery";
+  return category;
+};
+
 const sortOptions = [
   { id: "featured", label: "Featured" },
   { id: "price-low", label: "Price: Low to High" },
@@ -1329,7 +1335,7 @@ export default function App() {
               <h3>
                 {token
                   ? `${filteredProducts.length} products for ${
-                      activeCategory === "All" ? "all categories" : activeCategory
+                      activeCategory === "All" ? "all categories" : getCategoryDisplayName(activeCategory)
                     }`
                   : "Login required to view products"}
               </h3>

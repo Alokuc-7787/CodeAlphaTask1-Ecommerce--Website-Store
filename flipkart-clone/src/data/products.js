@@ -1,3 +1,19 @@
+const mobileAccessories = [
+  ["Smart Watch", 750, 1650, 4.4, "Daily use smart watch", "/mobile-accessories/smart-watch.svg"],
+  ["Music Box", 450, 650, 4.2, "Portable mini speaker", "/mobile-accessories/music-box.svg"],
+  ["Bluetooth Earphones", 600, 900, 4.3, "Neckband bluetooth earphones", "/mobile-accessories/bluetooth-earphones.svg"],
+  ["Keypad Phone Charger", 80, 120, 4.0, "Basic phone charger", "/mobile-accessories/keypad-phone-charger.svg"],
+  ["Voice Mike", 1050, 1299, 4.5, "Wireless voice microphone", "/mobile-accessories/voice-mike.svg"],
+  ["Mobile Stand", 150, 250, 4.1, "Foldable mobile stand", "/mobile-accessories/mobile-stand.svg"],
+  ["iPhone Charger", 250, 950, 4.2, "USB-C iPhone charger", "/mobile-accessories/iphone-charger.svg"],
+  ["Video Stand", 700, 999, 4.3, "Selfie and video stand", "/mobile-accessories/video-stand.svg"],
+  ["Airphone", 100, 150, 4.0, "Wired airphone", "/mobile-accessories/airphone.svg"],
+  ["Camera Screen Guard", 100, 150, 4.1, "Camera lens protector", "/mobile-accessories/camera-screen-guard.svg"],
+  ["Mobile Screen Guard", 100, 150, 4.1, "Tempered screen guard", "/mobile-accessories/mobile-screen-guard.svg"],
+  ["Charger", 350, 500, 4.2, "Fast mobile charger", "/mobile-accessories/charger.svg"],
+  ["Data Cable", 150, 250, 4.0, "USB data cable", "/mobile-accessories/data-cable.svg"],
+];
+
 const products = [
   {
     id: 1,
@@ -181,4 +197,30 @@ const products = [
   },
 ];
 
-export default products;
+const mobileAccessoryProducts = mobileAccessories.map(
+  ([name, price, originalPrice, rating, tagline, image], index) => ({
+    id: index + 1,
+    name,
+    category: "Mobiles",
+    price,
+    originalPrice,
+    rating,
+    delivery: index % 2 === 0 ? "Delivery in 2 days" : "Delivery by tomorrow",
+    tagline,
+    description: `${name} for mobile accessory buyers with reliable daily-use quality.`,
+    features: ["Shop stock", "Best value", "Daily use"],
+    image,
+  }),
+);
+
+const fallbackProducts = [
+  ...mobileAccessoryProducts,
+  ...products
+    .filter((product) => product.category !== "Mobiles")
+    .map((product, index) => ({
+      ...product,
+      id: mobileAccessoryProducts.length + index + 1,
+    })),
+];
+
+export default fallbackProducts;
