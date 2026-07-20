@@ -9,7 +9,6 @@ const mobiles = [
   ["Video Stand", 700, 999, 4.3, "Delivery in 2 days", "Selfie and video stand", "Video stand for reels, live video, photos, and shop product recording.", ["Extendable stick", "Phone holder", "Portable design"], "/mobile-accessories/video-stand.svg"],
   ["Airphone", 100, 150, 4.0, "Delivery by tomorrow", "Wired airphone", "Budget wired earphone for calls, music, and daily phone use.", ["Built-in mic", "Lightweight", "Clear sound"], "/mobile-accessories/airphone.svg"],
   ["Camera Screen Guard", 100, 150, 4.1, "Delivery by tomorrow", "Camera lens protector", "Camera screen guard for protecting phone camera lenses from scratches.", ["Lens protection", "Easy install", "Anti scratch"], "/mobile-accessories/camera-screen-guard.svg"],
-  ["Mobile Screen Guard", 100, 150, 4.1, "Delivery by tomorrow", "Tempered screen guard", "Mobile screen guard for display protection and scratch resistance.", ["Tempered glass", "Anti scratch", "Easy fit"], "/mobile-accessories/mobile-screen-guard.svg"],
   ["Charger", 350, 500, 4.2, "Delivery in 2 days", "Fast mobile charger", "Daily mobile charger for quick and reliable charging.", ["Fast charging", "Compact body", "Daily use"], "/mobile-accessories/charger.svg"],
   ["Data Cable", 150, 250, 4.0, "Delivery by tomorrow", "USB data cable", "Data cable for charging and sync with durable daily-use build.", ["Charging support", "Sync data", "Durable cable"], "/mobile-accessories/data-cable.svg"],
 ];

@@ -9,7 +9,6 @@ const mobileAccessories = [
   ["Video Stand", 700, 999, 4.3, "Selfie and video stand", "/mobile-accessories/video-stand.svg"],
   ["Airphone", 100, 150, 4.0, "Wired airphone", "/mobile-accessories/airphone.svg"],
   ["Camera Screen Guard", 100, 150, 4.1, "Camera lens protector", "/mobile-accessories/camera-screen-guard.svg"],
-  ["Mobile Screen Guard", 100, 150, 4.1, "Tempered screen guard", "/mobile-accessories/mobile-screen-guard.svg"],
   ["Charger", 350, 500, 4.2, "Fast mobile charger", "/mobile-accessories/charger.svg"],
   ["Data Cable", 150, 250, 4.0, "USB data cable", "/mobile-accessories/data-cable.svg"],
 ];
