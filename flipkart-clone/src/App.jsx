@@ -241,6 +241,7 @@ export default function App() {
   const [showOrderSuccessModal, setShowOrderSuccessModal] = useState(false);
   const [recentOrder, setRecentOrder] = useState(null);
   const [activeFooterTab, setActiveFooterTab] = useState("about");
+  const [showAboutPage, setShowAboutPage] = useState(false);
   const [contactSubmitting, setContactSubmitting] = useState(false);
   const [showAdminMessagesModal, setShowAdminMessagesModal] = useState(false);
   const [contactMessages, setContactMessages] = useState([]);
@@ -739,8 +740,7 @@ export default function App() {
     }
 
     if (item === "About Us") {
-      setActiveFooterTab("about");
-      scrollToSection(footerSectionRef);
+      setShowAboutPage(true);
       return;
     }
 
@@ -1400,7 +1400,7 @@ export default function App() {
         <div className="footer-grid">
           <button
             className={`footer-card ${activeFooterTab === "about" ? "active" : ""}`}
-            onClick={() => setActiveFooterTab("about")}
+            onClick={() => setShowAboutPage(true)}
           >
             <span className="footer-card-kicker">About Us</span>
             <strong>Aarohimart story, vision, and shopping promise.</strong>
@@ -1633,6 +1633,64 @@ export default function App() {
           ) : null}
         </div>
       </footer>
+
+      {showAboutPage ? (
+        <div className="about-page-backdrop" role="presentation">
+          <section className="about-page" role="dialog" aria-modal="true" aria-label="About Aarohimart">
+            <button className="icon-close about-page-close" onClick={() => setShowAboutPage(false)}>
+              Close
+            </button>
+
+            <div className="about-page-hero">
+              <span className="section-label">About Aarohimart</span>
+              <h2>Aarohimart, Sasamusa ka trusted local shop aur online service center.</h2>
+              <p>
+                Aarohimart me mobile accessories, stationery, online all work, aur mobile
+                repair ki service milti hai. Hamari shop Sasamusa me Ibrahim Memorial High
+                School ke bagal me hai.
+              </p>
+            </div>
+
+            <div className="about-page-grid">
+              <article>
+                <span>01</span>
+                <h3>Products</h3>
+                <p>Mobile accessories, stationery items, electronics accessories, chargers, cables, earphones, screen guards, stands, speakers, and daily-use shop products.</p>
+              </article>
+              <article>
+                <span>02</span>
+                <h3>Services</h3>
+                <p>Online all work, form fill-up support, document-related online work, mobile repair help, and customer support from the shop.</p>
+              </article>
+              <article>
+                <span>03</span>
+                <h3>Trust Points</h3>
+                <p>Genuine products, affordable price, fast support, secure payment, and simple buying experience for every customer.</p>
+              </article>
+              <article>
+                <span>04</span>
+                <h3>Delivery & Support</h3>
+                <p>Local customer support, order help, exchange/return guidance, and product issue support as per shop policy.</p>
+              </article>
+            </div>
+
+            <div className="about-page-bottom">
+              <div>
+                <strong>Address</strong>
+                <p>Sasamusa, Ibrahim Memorial High School ke bagal me, Sasamusa.</p>
+              </div>
+              <div>
+                <strong>Contact</strong>
+                <p>Phone, email, aur working hours ke liye Contact section use karein.</p>
+              </div>
+              <div>
+                <strong>Mission</strong>
+                <p>Customer ko best product best price par dena.</p>
+              </div>
+            </div>
+          </section>
+        </div>
+      ) : null}
 
       {selectedProduct && (
         <div
