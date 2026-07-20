@@ -1392,8 +1392,7 @@ export default function App() {
           <span className="section-label">Aarohimart Footer</span>
           <h2>Helpful links, support details, and brand info in one clean space.</h2>
           <p>
-            Footer me quick company info, contact options, aur shopping help rakha gaya hai
-            taki page zyada complete aur useful lage.
+            Find quick company information, contact options, and shopping help in one place.
           </p>
         </div>
 
@@ -1431,14 +1430,14 @@ export default function App() {
             <div className="about-experience">
               <div className="about-video-card">
                 <span className="section-label">About Aarohimart</span>
-                <h3>Sasamusa ka trusted shop aur online service point.</h3>
+                <h3>Sasamusa's trusted shop and online service point.</h3>
                 <p>
-                  Aarohimart me mobile accessories, online all work, stationery, aur
-                  mobile repair services ek hi jagah milti hain. Shop Sasamusa me
-                  Ibrahim Memorial High School ke bagal me located hai.
+                  Aarohimart offers mobile accessories, online work services, stationery,
+                  and mobile repair support in one place. The shop is located near
+                  Ibrahim Memorial High School Sasamusa.
                 </p>
                 <div className="about-location-pill">
-                  Sasamusa, Ibrahim Memorial High School ke bagal me
+                  Near Ibrahim Memorial High School Sasamusa
                 </div>
               </div>
 
@@ -1457,7 +1456,7 @@ export default function App() {
                 </div>
                 <div>
                   <strong>Contact Info</strong>
-                  <span>Phone, email, address, and working hours Contact section me available hain.</span>
+                  <span>Phone, email, address, and working hours are available in the Contact section.</span>
                 </div>
               </div>
 
@@ -1492,8 +1491,8 @@ export default function App() {
                     <em>ONLINE</em>
                   </div>
                   <div className="support-chat-bubble">
-                    Hi! Main Aarohimart AI support hu. Order, exchange, delivery,
-                    return ya payment ke baare me pooch sakte ho.
+                    Hi! I am Aarohimart AI support. You can ask about orders,
+                    exchange, delivery, returns, or payments.
                   </div>
                   <div className="support-chip-row">
                     <span>Exchange kaise kare?</span>
@@ -1643,11 +1642,11 @@ export default function App() {
 
             <div className="about-page-hero">
               <span className="section-label">About Aarohimart</span>
-              <h2>Aarohimart, Sasamusa ka trusted local shop aur online service center.</h2>
+              <h2>Aarohimart, Sasamusa's trusted local shop and online service center.</h2>
               <p>
-                Aarohimart me mobile accessories, stationery, online all work, aur mobile
-                repair ki service milti hai. Hamari shop Sasamusa me Ibrahim Memorial High
-                School ke bagal me hai.
+                Aarohimart provides mobile accessories, stationery, online work services,
+                and mobile repair support. Our shop is located near Ibrahim Memorial
+                High School Sasamusa.
               </p>
             </div>
 
@@ -1677,7 +1676,7 @@ export default function App() {
             <div className="about-page-bottom">
               <div>
                 <strong>Address</strong>
-                <p>Sasamusa, Ibrahim Memorial High School ke bagal me, Sasamusa.</p>
+                <p>Near Ibrahim Memorial High School Sasamusa.</p>
               </div>
               <div>
                 <strong>Contact</strong>
