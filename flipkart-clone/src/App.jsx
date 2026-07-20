@@ -10,6 +10,8 @@ import heroProducts from "./assets/hero-products.png";
 import heroStationeryOne from "./assets/hero-stationery-1.png";
 import heroStationeryTwo from "./assets/hero-stationery-2.png";
 import heroStationeryThree from "./assets/hero-stationery-3.png";
+import aboutShopOne from "./assets/about-shop-1.png";
+import aboutShopTwo from "./assets/about-shop-2.png";
 import fallbackProducts from "./data/products";
 import "./App.css";
 
@@ -1429,15 +1431,22 @@ export default function App() {
           {activeFooterTab === "about" ? (
             <div className="about-experience">
               <div className="about-video-card">
-                <span className="section-label">About Aarohimart</span>
-                <h3>Sasamusa's trusted shop and online service point.</h3>
-                <p>
-                  Aarohimart offers mobile accessories, online work services, stationery,
-                  and mobile repair support in one place. The shop is located near
-                  Ibrahim Memorial High School Sasamusa.
-                </p>
-                <div className="about-location-pill">
-                  Near Ibrahim Memorial High School Sasamusa
+                <div className="about-video-copy">
+                  <span className="section-label">About Aarohimart</span>
+                  <h3>Sasamusa's trusted shop and online service point.</h3>
+                  <p>
+                    Aarohimart offers mobile accessories, online work services, stationery,
+                    and mobile repair support in one place. The shop is located near
+                    Ibrahim Memorial High School Sasamusa.
+                  </p>
+                  <div className="about-location-pill">
+                    Near Ibrahim Memorial High School Sasamusa
+                  </div>
+                </div>
+                <div className="about-reel-preview" aria-label="Aarohimart shop photo reel">
+                  <img src={aboutShopOne} alt="Aarohimart shop shelves with mobile accessories" />
+                  <img src={aboutShopTwo} alt="Wide inside view of Aarohimart shop counter" />
+                  <span>SHOP TOUR</span>
                 </div>
               </div>
 
@@ -1641,13 +1650,29 @@ export default function App() {
             </button>
 
             <div className="about-page-hero">
-              <span className="section-label">About Aarohimart</span>
-              <h2>Aarohimart, Sasamusa's trusted local shop and online service center.</h2>
-              <p>
-                Aarohimart provides mobile accessories, stationery, online work services,
-                and mobile repair support. Our shop is located near Ibrahim Memorial
-                High School Sasamusa.
-              </p>
+              <div className="about-page-hero-copy">
+                <span className="section-label">About Aarohimart</span>
+                <h2>Aarohimart, Sasamusa's trusted local shop and online service center.</h2>
+                <p>
+                  Aarohimart provides mobile accessories, stationery, online work services,
+                  and mobile repair support. Our shop is located near Ibrahim Memorial
+                  High School Sasamusa.
+                </p>
+              </div>
+
+              <div className="about-cinema" aria-label="Aarohimart shop cinematic photos">
+                <div className="about-cinema-main">
+                  <img src={aboutShopOne} alt="Aarohimart shop product shelves" />
+                  <div className="about-cinema-overlay">
+                    <span>Inside Aarohimart</span>
+                    <strong>Mobile accessories, stationery, online work, and repair support.</strong>
+                  </div>
+                </div>
+                <div className="about-cinema-side">
+                  <img src={aboutShopTwo} alt="Aarohimart shop wide counter view" />
+                  <span>Live shop view</span>
+                </div>
+              </div>
             </div>
 
             <div className="about-page-grid">
