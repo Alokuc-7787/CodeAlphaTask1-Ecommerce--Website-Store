@@ -2864,7 +2864,8 @@ button:disabled {
   }
 
   .category-tile strong {
-    font-size: 0.68rem;
+    font-size: 0.64rem;
+    line-height: 1.15;
   }
 
   .category-tile small {

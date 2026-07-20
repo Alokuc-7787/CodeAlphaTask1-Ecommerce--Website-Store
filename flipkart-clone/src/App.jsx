@@ -28,7 +28,7 @@ const API_BASE_URL = normalizeApiBaseUrl(import.meta.env.VITE_API_BASE_URL);
 const categories = [
   {
     id: "Mobiles",
-    label: "Mobiles",
+    label: "Mobile Accessories",
     offer: "Up to 40% Off",
     image: categoryMobile,
   },
@@ -703,7 +703,13 @@ export default function App() {
   };
 
   const handleHeaderNavigation = (item) => {
-    if (["Mobiles", "Fashion", "Electronics"].includes(item)) {
+    if (item === "Mobile Accessories") {
+      setActiveCategory("Mobiles");
+      scrollToSection(catalogSectionRef);
+      return;
+    }
+
+    if (["Fashion", "Electronics"].includes(item)) {
       setActiveCategory(item);
       scrollToSection(catalogSectionRef);
       return;
@@ -1420,7 +1426,7 @@ export default function App() {
               <div className="footer-detail-points">
                 <div>
                   <strong>What we do</strong>
-                  <span>Mobiles, fashion, electronics, and featured daily offers.</span>
+                  <span>Mobile accessories, fashion, electronics, and featured daily offers.</span>
                 </div>
                 <div>
                   <strong>Our promise</strong>

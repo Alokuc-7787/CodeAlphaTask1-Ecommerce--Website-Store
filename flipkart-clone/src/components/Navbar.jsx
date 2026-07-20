@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import aarohimartLogo from "../assets/aarohimart-logo.png";
 
-const navItems = ["Mobiles", "Fashion", "Electronics", "More", "Deals", "About Us", "Contact"];
+const navItems = ["Mobile Accessories", "Fashion", "Electronics", "More", "Deals", "About Us", "Contact"];
 
 function Navbar({
   cartCount,
@@ -42,7 +42,7 @@ function Navbar({
           </span>
           <div>
             <span className="brand-kicker">Aarohimart</span>
-            <p>Premium deals for mobiles, fashion, and electronics.</p>
+            <p>Premium deals for mobile accessories, fashion, and electronics.</p>
           </div>
         </div>
 
